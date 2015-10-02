@@ -15,11 +15,13 @@
         <br/>
         <h:form>
           <div class="TexAlRight">
-            <p:commandButton value="Add Studio" icon="fa fa-plus Fs16 White"/>
+            <p:commandButton value="Add Studio" icon="fa fa-plus Fs16 White" onclick="PF('addStudioDlg').show();">
+              <p:ajax event="dialogReturn" update="studios"/>
+            </p:commandButton>
           </div>
           <br/>
           
-          <p:dataTable var="_studio" value="#{studios}">
+          <p:dataTable id="studios" var="_studio" value="#{studios}">
             <p:column headerText="Studio">
               <h:outputText value="#{_studio.businessName}"/>
             </p:column>
@@ -27,7 +29,23 @@
               <h:outputText value="#{_studio.name}"/>
             </p:column>            
           </p:dataTable>
+          
+          
+          
         </h:form>
+        <p:dialog header="New Studio" widgetVar="addStudioDlg" showEffect="slide" hideEffect="fade" width="600" 
+                  fitViewport="true" modal="true">
+            <h:outputText value="Enter Studio Details"/>
+            <h:form>
+              <p:panelGrid columns="2" layout="grid" style="border:0px none">
+                <h:outputLabel value="Studio Name"/>
+                <p:inputText/>
+                
+                <h:outputLabel value="Code"/>
+                <p:inputText/>
+              </p:panelGrid>
+            </h:form>
+          </p:dialog>
         <br/><br/>
       </ui:define>
 
