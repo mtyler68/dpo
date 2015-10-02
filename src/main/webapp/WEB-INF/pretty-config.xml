@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.3.0" 
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.0	http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.0.xsd">
+  
+  <url-mapping id="login"> 
+    <pattern value="/login/#{studioSelector.studio}"/>
+    <view-id value="/login.xhtml"/>
+  </url-mapping>
+
+  <url-mapping id="loginAttempt">
+    <pattern value="/login.xhtml"/>
+    <view-id value="/access-denied.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="dashboard">
+    <pattern value="/back/dashboard"/>
+    <view-id value="/back/dashboard.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="accessDenied">
+    <view-id value="/access-denied.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="studios">
+    <pattern value="/back/admin/studios"/>
+    <view-id value="/back/admin/studios.xhtml"/>
+  </url-mapping>
+</pretty-config>
