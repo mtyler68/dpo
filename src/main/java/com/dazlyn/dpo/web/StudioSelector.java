@@ -26,9 +26,7 @@ public class StudioSelector implements Serializable {
     }
 
     public void setStudio(String studioId) {
-        System.out.println("setStudio()=" + studioId);
         this.studio = partitionManager.getPartition(Studio.class, studioId);
-        System.out.println("studio=" + this.studio);
     }
 
     public String getStudio() {

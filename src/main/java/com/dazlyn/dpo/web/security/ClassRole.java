@@ -2,6 +2,6 @@ package com.dazlyn.dpo.web.security;
 
 public enum ClassRole {
 
-    INSTRUCTOR,
-    STUDENT
+    CLASS_INSTRUCTOR,
+    CLASS_STUDENT
 }

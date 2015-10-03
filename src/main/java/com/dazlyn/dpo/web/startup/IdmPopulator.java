@@ -1,7 +1,9 @@
 package com.dazlyn.dpo.web.startup;
 
+import com.dazlyn.dpo.web.model.GroupClass;
 import com.dazlyn.dpo.web.security.Studio;
 import com.dazlyn.dpo.web.security.StudioRole;
+import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import org.picketlink.idm.IdentityManager;
@@ -11,6 +13,9 @@ import org.picketlink.idm.credential.Password;
 import org.picketlink.idm.model.basic.BasicModel;
 import org.picketlink.idm.model.basic.Role;
 import org.picketlink.idm.model.basic.User;
+import org.picketlink.idm.query.Condition;
+import org.picketlink.idm.query.IdentityQuery;
+import org.picketlink.idm.query.IdentityQueryBuilder;
 
 @javax.ejb.Singleton
 @javax.ejb.Startup
@@ -18,6 +23,9 @@ public class IdmPopulator {
 
     @Inject
     private PartitionManager partitionManager;
+
+    @Inject
+    private RelationshipManager relationshipManager;
 
     @PostConstruct
     public void create() {
@@ -76,5 +84,22 @@ public class IdmPopulator {
             BasicModel.grantRole(rm, user, studioRole(idm, studioRole));
         }
         return user;
+    }
+
+    private GroupClass createGroupClass(IdentityManager idm, String title, User instructor) {
+        GroupClass group = new GroupClass(UUID.randomUUID().toString());
+        group.setTitle(title);
+        idm.add(group);
+
+        group = getGroupClass(idm, group.getName());
+
+    }
+
+    private GroupClass getGroupClass(IdentityManager idm, String name) {
+        IdentityQueryBuilder builder = idm.getQueryBuilder();
+        Condition cond = builder.equal(GroupClass.NAME, name);
+        IdentityQuery<GroupClass> query = builder.createIdentityQuery(GroupClass.class)
+                .where(cond);
+        return query.getResultList().get(0);
     }
 }
