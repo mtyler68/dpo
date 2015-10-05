@@ -1,5 +1,6 @@
 package com.dazlyn.dpo.web.security;
 
+import com.dazlyn.dpo.web.model.StudioRole;
 import javax.enterprise.event.Observes;
 import org.picketlink.config.SecurityConfigurationBuilder;
 import org.picketlink.event.SecurityConfigurationEvent;
@@ -17,7 +18,7 @@ public class HttpSecurityConfiguration {
                 .http()
                 .forPath("/back/*")
                 .authorizeWith()
-                .role(StudioRole.EMPLOYEE.name())
+                .role(StudioRole.STUDIO_EMPLOYEE.name())
                 .redirectTo("/access-denied.xhtml").whenForbidden()
                 .http()
                 .forPath("/back/admin/*")

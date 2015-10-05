@@ -2,7 +2,7 @@ package com.dazlyn.dpo.web.startup;
 
 import com.dazlyn.dpo.web.model.GroupClass;
 import com.dazlyn.dpo.web.security.Studio;
-import com.dazlyn.dpo.web.security.StudioRole;
+import com.dazlyn.dpo.web.model.StudioRole;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -38,11 +38,14 @@ public class IdmPopulator {
 
             // Dazlyn
             idm = createStudio("dazlyn", "Dazlyn");
-            user = createUser(idm, "adam", "adam@example.com", "Adam", "Admin", StudioRole.ADMIN, StudioRole.EMPLOYEE);
+            user = createUser(idm, "adam", "adam@example.com", "Adam", "Admin", StudioRole.ADMIN, StudioRole.STUDIO_EMPLOYEE);
 
             // CAD
             idm = createStudio("coronadodance", "Coronado Academy of Dance");
-            user = createUser(idm, "india", "india@example.com", "India", "Instructor", StudioRole.INSTRUCTOR, StudioRole.EMPLOYEE);
+            User india = createUser(idm, "india", "india@example.com", "India", "Instructor", StudioRole.STUDIO_INSTRUCTOR, StudioRole.STUDIO_EMPLOYEE);
+
+            GroupClass ballet5 = createGroupClass(idm, "Ballet 5", india);
+            GroupClass contemp2 = createGroupClass(idm, "Contemporary 2", india);
         }
     }
 
@@ -54,12 +57,12 @@ public class IdmPopulator {
         IdentityManager idm = partitionManager.createIdentityManager(studio);
 
         idm.add(new Role(StudioRole.ADMIN.name()));
-        idm.add(new Role(StudioRole.ASSISTANT.name()));
-        idm.add(new Role(StudioRole.BOOKKEEPER.name()));
-        idm.add(new Role(StudioRole.CLIENT.name()));
-        idm.add(new Role(StudioRole.DIRECTOR.name()));
-        idm.add(new Role(StudioRole.INSTRUCTOR.name()));
-        idm.add(new Role(StudioRole.EMPLOYEE.name()));
+        idm.add(new Role(StudioRole.STUDIO_ASSISTANT.name()));
+        idm.add(new Role(StudioRole.STUDIO_BOOKKEEPER.name()));
+        idm.add(new Role(StudioRole.STUDIO_CLIENT.name()));
+        idm.add(new Role(StudioRole.STUDIO_DIRECTOR.name()));
+        idm.add(new Role(StudioRole.STUDIO_INSTRUCTOR.name()));
+        idm.add(new Role(StudioRole.STUDIO_EMPLOYEE.name()));
 
         return idm;
     }
@@ -92,7 +95,8 @@ public class IdmPopulator {
         idm.add(group);
 
         group = getGroupClass(idm, group.getName());
-
+        BasicModel.addToGroup(relationshipManager, instructor, group);
+        return group;
     }
 
     private GroupClass getGroupClass(IdentityManager idm, String name) {
