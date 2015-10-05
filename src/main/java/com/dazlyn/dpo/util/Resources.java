@@ -1,4 +1,4 @@
-package com.dazlyn.dpo.web.util;
+package com.dazlyn.dpo.util;
 
 import java.util.logging.Logger;
 

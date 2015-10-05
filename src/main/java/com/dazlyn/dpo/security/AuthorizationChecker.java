@@ -1,4 +1,4 @@
-package com.dazlyn.dpo.web.security;
+package com.dazlyn.dpo.security;
 
 import javax.inject.Inject;
 import javax.inject.Named;

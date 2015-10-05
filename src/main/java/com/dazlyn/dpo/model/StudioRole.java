@@ -1,4 +1,4 @@
-package com.dazlyn.dpo.web.model;
+package com.dazlyn.dpo.model;
 
 public enum StudioRole {
 

@@ -1,6 +1,6 @@
-package com.dazlyn.dpo.web.controller;
+package com.dazlyn.dpo.controller;
 
-import com.dazlyn.dpo.web.security.Studio;
+import com.dazlyn.dpo.model.Studio;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,9 +33,10 @@ public class LoginController {
         if (identity.isLoggedIn()) {
             return "pretty:dashboard";
         } else {
-            log.info("action=login, user={}, studio={}, message=\"{}\"",
+            log.info("action=login, user={}, studio={}, authResult={} message=\"{}\"",
                     credentials.getUserId(),
                     studio.getName(),
+                    result,
                     "authentication failed");
             return null;
         }

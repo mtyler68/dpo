@@ -1,7 +1,7 @@
-package com.dazlyn.dpo.web.controller;
+package com.dazlyn.dpo.controller;
 
-import com.dazlyn.dpo.web.model.StudioRole;
-import com.dazlyn.dpo.web.security.Studio;
+import com.dazlyn.dpo.model.StudioRole;
+import com.dazlyn.dpo.model.Studio;
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;

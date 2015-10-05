@@ -1,9 +1,11 @@
-package com.dazlyn.dpo.web.model;
+package com.dazlyn.dpo.model;
 
-import com.dazlyn.dpo.web.security.Studio;
+import com.dazlyn.dpo.model.StudioRole;
+import com.dazlyn.dpo.model.Studio;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import lombok.extern.slf4j.Slf4j;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.PartitionManager;
 import org.picketlink.idm.RelationshipManager;
@@ -12,6 +14,7 @@ import org.picketlink.idm.model.basic.Role;
 
 @ApplicationScoped
 @Named
+@Slf4j
 public class StudioManager {
 
     @Inject
@@ -45,6 +48,10 @@ public class StudioManager {
     public void grantRoles(Studio studio, Person person, StudioRole... roles) {
         IdentityManager idm = partitionManager.createIdentityManager(studio);
         for (StudioRole role : roles) {
+            log.info("action=grantRoles, studio={}, person={}, role={}",
+                    studio.getName(),
+                    person.getLoginName(),
+                    role.name());
             BasicModel.grantRole(relationshipManager, person, BasicModel.getRole(idm, role.name()));
         }
     }

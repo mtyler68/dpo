@@ -1,6 +1,6 @@
-package com.dazlyn.dpo.web.data;
+package com.dazlyn.dpo.data;
 
-import com.dazlyn.dpo.web.model.GroupClass;
+import com.dazlyn.dpo.model.GroupClass;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;

@@ -1,6 +1,6 @@
 package com.dazlyn.dpo.data;
 
-import com.dazlyn.dpo.web.security.Studio;
+import com.dazlyn.dpo.model.Studio;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;

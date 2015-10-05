@@ -1,4 +1,4 @@
-package com.dazlyn.dpo.web.security;
+package com.dazlyn.dpo.model;
 
 import java.io.Serializable;
 import lombok.Getter;

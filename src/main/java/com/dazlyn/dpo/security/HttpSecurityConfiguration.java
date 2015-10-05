@@ -1,6 +1,6 @@
-package com.dazlyn.dpo.web.security;
+package com.dazlyn.dpo.security;
 
-import com.dazlyn.dpo.web.model.StudioRole;
+import com.dazlyn.dpo.model.StudioRole;
 import javax.enterprise.event.Observes;
 import org.picketlink.config.SecurityConfigurationBuilder;
 import org.picketlink.event.SecurityConfigurationEvent;

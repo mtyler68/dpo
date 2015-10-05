@@ -1,20 +1,20 @@
-package com.dazlyn.dpo.web;
+package com.dazlyn.dpo.data;
 
-import com.dazlyn.dpo.web.security.Studio;
+import com.dazlyn.dpo.model.Studio;
+import com.dazlyn.dpo.model.StudioManager;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.picketlink.annotations.PicketLink;
-import org.picketlink.idm.PartitionManager;
 
 @SessionScoped
 @Named
 public class StudioSelector implements Serializable {
 
     @Inject
-    private PartitionManager partitionManager;
+    private StudioManager studioManager;
 
     private Studio studio;
 
@@ -26,7 +26,7 @@ public class StudioSelector implements Serializable {
     }
 
     public void setStudio(String studioId) {
-        this.studio = partitionManager.getPartition(Studio.class, studioId);
+        this.studio = studioManager.findStudio(studioId);
     }
 
     public String getStudio() {
