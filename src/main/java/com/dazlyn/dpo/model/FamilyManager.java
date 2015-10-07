@@ -31,4 +31,8 @@ public class FamilyManager {
     public void flush() {
         em.flush();
     }
+
+    public void refresh(Family family) {
+        em.refresh(family);
+    }
 }

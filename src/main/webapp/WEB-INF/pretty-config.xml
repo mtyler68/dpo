@@ -26,4 +26,14 @@
     <pattern value="/back/admin/studios"/>
     <view-id value="/back/admin/studios.xhtml"/>
   </url-mapping>
+  
+  <url-mapping id="families">
+    <pattern value="/back/studio/families"/>
+    <view-id value="/back/studio/families.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="familyDashboard">
+    <pattern value="/back/studio/family/#{familyUid}"/>
+    <view-id value="/back/studio/family-dashboard.xhtml"/>
+  </url-mapping>
 </pretty-config>

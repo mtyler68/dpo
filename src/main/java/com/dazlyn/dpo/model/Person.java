@@ -7,6 +7,8 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +16,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Builder;
 
 @Entity(name = "person")
+@NamedQueries({
+    @NamedQuery(name = "Person.findByStudio",
+            query = "SELECT p FROM person p WHERE p.studio = :studio")
+})
 @Data
 @Builder
 @NoArgsConstructor

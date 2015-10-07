@@ -77,10 +77,15 @@ public class IdmPopulator {
             Person indiaPerson = createPerson(cadRealm, cadStudio, "india", "india",
                     "india@coronadodance.com", "India", "Instructor", true, false, false, RealmRole.INSTRUCTOR);
 
+            // Epic Dance
+            Realm epicRealm = realmManager.createRealm("epicdance");
+            Studio epicStudio = createStudio(epicRealm, "Epic Dance");
+
             try {
                 loadNames();
                 Iterator<NameEntry> it = names.iterator();
-                it = createClients(cadStudio, it, 50);
+                it = createClients(cadStudio, it, 100);
+                it = createClients(epicStudio, it, 150);
             } catch (IOException ex) {
                 log.error("action=create", ex);
             }
@@ -129,7 +134,7 @@ public class IdmPopulator {
             while (line != null) {
                 try {
                     String firstName = line.substring(0, line.indexOf(' '));
-                    String lastName = line.substring(line.indexOf(' ') + 1);
+                    String lastName = line.substring(line.indexOf(' ') + 1, line.length() - 1);
                     names.add(new NameEntry(firstName.trim(), lastName.trim()));
                 } catch (Exception e) {
                     log.info("action=loadNames", e);
@@ -148,14 +153,16 @@ public class IdmPopulator {
             }
 
             NameEntry mainEntry = it.next();
+            int numStudents = rand.nextInt(3);
+
             Person mainPerson = Person.builder()
-                    .email(String.format("%s.%s" + "@example.com", mainEntry.getFirstName(), mainEntry.getLastName()))
+                    .email(mainEntry.getFirstName().toLowerCase() + '.' + mainEntry.getLastName().toLowerCase() + "@example.com")
                     .firstName(mainEntry.getFirstName())
                     .lastName(mainEntry.getLastName())
                     .studio(studio)
                     .typeEmployee(false)
-                    .typeGuardian(true)
-                    .typeStudent(false)
+                    .typeGuardian(numStudents > 0)
+                    .typeStudent(numStudents == 0)
                     .userId(null)
                     .build();
             personManager.add(mainPerson);
@@ -169,7 +176,7 @@ public class IdmPopulator {
 
             family = familyManager.find(family.getUid());
 
-            int numStudents = 1 + rand.nextInt(2);
+
             for (int ndx = 0; ndx < numStudents; ndx++) {
                 if (!it.hasNext()) {
                     it = names.iterator();

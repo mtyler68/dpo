@@ -52,4 +52,11 @@ public class StudioManager {
         return (Studio) (results.isEmpty() ? null : results.get(0));
     }
 
+    public Studio findByRealmIdWithFamilies(String realmId) {
+        TypedQuery<Studio> query = em.createNamedQuery("Studio.findByRealmIdWithFamilies", Studio.class)
+                .setParameter("realmId", realmId);
+        List results = query.getResultList();
+        return (Studio) (results.isEmpty() ? null : results.get(0));
+    }
+
 }

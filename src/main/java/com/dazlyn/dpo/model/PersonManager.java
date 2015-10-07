@@ -1,5 +1,6 @@
 package com.dazlyn.dpo.model;
 
+import java.util.List;
 import java.util.UUID;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -34,5 +35,11 @@ public class PersonManager {
 
     public void persist(Person person) {
         em.persist(person);
+    }
+
+    public List<Person> findByStudio(Studio studio) {
+        return em.createNamedQuery("Person.findByStudio", Person.class)
+                .setParameter("studio", studio)
+                .getResultList();
     }
 }

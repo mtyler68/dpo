@@ -22,7 +22,9 @@ import lombok.experimental.Builder;
     @NamedQuery(name = "Studio.findAll",
             query = "SELECT s FROM studio s"),
     @NamedQuery(name = "Studio.findByRealmId",
-            query = "SELECT s FROM studio s WHERE s.realmId = :realmId")
+            query = "SELECT s FROM studio s WHERE s.realmId = :realmId"),
+    @NamedQuery(name = "Studio.findByRealmIdWithFamilies",
+            query = "SELECT s FROM studio s JOIN FETCH s.families f WHERE s.realmId = :realmId")
 })
 @Data
 @Builder
