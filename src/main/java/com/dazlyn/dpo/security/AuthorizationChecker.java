@@ -1,5 +1,6 @@
 package com.dazlyn.dpo.security;
 
+import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.picketlink.Identity;
@@ -21,9 +22,27 @@ public class AuthorizationChecker {
     @Inject
     private RelationshipManager relationshipManager;
 
-    public boolean hasApplicationRole(String roleName) {
+    public boolean hasRealmRole(String roleName) {
         Role role = BasicModel.getRole(this.identityManager, roleName);
         return BasicModel.hasRole(this.relationshipManager, this.identity.getAccount(), role);
+    }
+
+    public boolean hasAnyRealmRole(String... roleNames) {
+        for (String roleName : roleNames) {
+            if (hasRealmRole(roleName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasAnyRealmRole(ArrayList roleNames) {
+        for (Object roleName : roleNames) {
+            if (hasRealmRole((String) roleName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isMember(String groupName) {

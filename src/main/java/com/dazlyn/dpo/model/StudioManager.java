@@ -1,16 +1,18 @@
 package com.dazlyn.dpo.model;
 
-import com.dazlyn.dpo.model.StudioRole;
 import com.dazlyn.dpo.model.Studio;
+import com.dazlyn.dpo.security.RealmManager;
+import java.util.List;
+import java.util.UUID;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.PartitionManager;
 import org.picketlink.idm.RelationshipManager;
-import org.picketlink.idm.model.basic.BasicModel;
-import org.picketlink.idm.model.basic.Role;
 
 @ApplicationScoped
 @Named
@@ -23,36 +25,31 @@ public class StudioManager {
     @Inject
     private RelationshipManager relationshipManager;
 
-    public Studio createStudio(String code, String fullName) {
-        Studio studio = new Studio(code);
-        studio.setBusinessName(fullName);
+    @Inject
+    private RealmManager realmManager;
 
-        partitionManager.add(studio);
-        IdentityManager idm = partitionManager.createIdentityManager(studio);
+    @Inject
+    private EntityManager em;
 
-        idm.add(new Role(StudioRole.ADMIN.name()));
-        idm.add(new Role(StudioRole.STUDIO_ASSISTANT.name()));
-        idm.add(new Role(StudioRole.STUDIO_BOOKKEEPER.name()));
-        idm.add(new Role(StudioRole.STUDIO_CLIENT.name()));
-        idm.add(new Role(StudioRole.STUDIO_DIRECTOR.name()));
-        idm.add(new Role(StudioRole.STUDIO_INSTRUCTOR.name()));
-        idm.add(new Role(StudioRole.STUDIO_EMPLOYEE.name()));
+    @Transactional
+    public void add(Studio studio) {
 
-        return studio;
-    }
-
-    public Studio findStudio(String code) {
-        return partitionManager.getPartition(Studio.class, code);
-    }
-
-    public void grantRoles(Studio studio, Person person, StudioRole... roles) {
-        IdentityManager idm = partitionManager.createIdentityManager(studio);
-        for (StudioRole role : roles) {
-            log.info("action=grantRoles, studio={}, person={}, role={}",
-                    studio.getName(),
-                    person.getLoginName(),
-                    role.name());
-            BasicModel.grantRole(relationshipManager, person, BasicModel.getRole(idm, role.name()));
+        if (studio.getUid() == null) {
+            studio.setUid(UUID.randomUUID().toString());
         }
+        em.persist(studio);
     }
+
+    public List<Studio> findAll() {
+        return em.createNamedQuery("Studio.findAll", Studio.class)
+                .getResultList();
+    }
+
+    public Studio findByRealmId(String realmId) {
+        TypedQuery<Studio> query = em.createNamedQuery("Studio.findByRealmId", Studio.class)
+                .setParameter("realmId", realmId);
+        List results = query.getResultList();
+        return (Studio) (results.isEmpty() ? null : results.get(0));
+    }
+
 }

@@ -10,7 +10,7 @@
         <h:form id="menuform">
             <pm:menu>
               <p:submenu id="rm_administration" label="Administration" icon="icon-settings" 
-                         rendered="#{authorizationChecker.hasApplicationRole('ADMIN')}">
+                         rendered="#{authorizationChecker.hasRealmRole('ADMIN')}">
                 <p:menuitem id="rm_studios" value="Studios" outcome="pretty:studios"/>                
               </p:submenu>
                 <p:menuitem id="rm_dashboard" value="Dashboard" icon="icon-dvr" outcome="pretty:dashboard"/>

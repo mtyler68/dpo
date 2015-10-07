@@ -1,23 +1,48 @@
 package com.dazlyn.dpo.model;
 
 import java.io.Serializable;
-import lombok.Getter;
-import lombok.Setter;
-import org.picketlink.idm.model.annotation.AttributeProperty;
-import org.picketlink.idm.model.basic.Realm;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.Builder;
 
-@Getter
-@Setter
-public class Studio extends Realm implements Serializable {
+@Entity(name = "studio")
+@NamedQueries({
+    @NamedQuery(name = "Studio.findAll",
+            query = "SELECT s FROM studio s"),
+    @NamedQuery(name = "Studio.findByRealmId",
+            query = "SELECT s FROM studio s WHERE s.realmId = :realmId")
+})
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString(exclude = {"families"})
+public class Studio implements Serializable {
 
-    @AttributeProperty(managed = true)
-    private String businessName;
+    @Id
+    @Column(length = 36, unique = true)
+    private String uid;
 
-    public Studio() {
-    }
+    private String name;
 
-    public Studio(String name) {
-        super(name);
-    }
+    private String code;
+
+    @Column(name = "realm_id", length = 36)
+    private String realmId;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "studio")
+    private List<Family> families = new ArrayList<>();
 
 }

@@ -1,12 +1,13 @@
 package com.dazlyn.dpo.controller;
 
-import com.dazlyn.dpo.model.Studio;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.extern.slf4j.Slf4j;
 import org.picketlink.Identity;
 import org.picketlink.credential.DefaultLoginCredentials;
+import org.picketlink.idm.model.basic.Realm;
+import org.picketlink.idm.model.basic.User;
 
 @Named("loginController")
 @RequestScoped
@@ -20,13 +21,13 @@ public class LoginController {
     private DefaultLoginCredentials credentials;
 
     @Inject
-    @Named("studio")
-    private Studio studio;
+    @Named("realm")
+    private Realm realm;
 
     public String login() {
         log.info("action=login, user={}, studio={} message=\"{}\"",
                 credentials.getUserId(),
-                studio.getName(),
+                realm.getName(),
                 "authenticating user");
 
         Identity.AuthenticationResult result = identity.login();
@@ -35,7 +36,7 @@ public class LoginController {
         } else {
             log.info("action=login, user={}, studio={}, authResult={} message=\"{}\"",
                     credentials.getUserId(),
-                    studio.getName(),
+                    realm.getName(),
                     result,
                     "authentication failed");
             return null;
@@ -44,8 +45,8 @@ public class LoginController {
 
     public String logout() {
         log.info("action=logout, user={}, studio={}",
-                credentials.getUserId(),
-                studio.getName());
+                ((User) identity.getAccount()).getLoginName(),
+                realm.getName());
 
         identity.logout();
         return "pretty:login";

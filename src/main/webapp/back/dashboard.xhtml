@@ -19,7 +19,7 @@
                     <br/>
                     <span class="gray">Use this page to start from scratch and place your custom content.</span>
                     <br/><br/>
-                    <ui:fragment rendered="#{authorizationChecker.hasApplicationRole('STUDIO_INSTRUCTOR')}">
+                    <ui:fragment rendered="#{authorizationChecker.hasRealmRole('INSTRUCTOR')}">
                       <h3>My Classes</h3>
                     </ui:fragment>
                 </div>
