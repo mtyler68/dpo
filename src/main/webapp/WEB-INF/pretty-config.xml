@@ -4,7 +4,7 @@
                xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.0	http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.0.xsd">
   
   <url-mapping id="login"> 
-    <pattern value="/login/#{studioSelector.studio}"/>
+    <pattern value="/login/#{realmSelector.realm}"/>
     <view-id value="/login.xhtml"/>
   </url-mapping>
 
@@ -25,5 +25,15 @@
   <url-mapping id="studios">
     <pattern value="/back/admin/studios"/>
     <view-id value="/back/admin/studios.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="families">
+    <pattern value="/back/studio/families"/>
+    <view-id value="/back/studio/families.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="familyDashboard">
+    <pattern value="/back/studio/family/#{familyUid}"/>
+    <view-id value="/back/studio/family-dashboard.xhtml"/>
   </url-mapping>
 </pretty-config>

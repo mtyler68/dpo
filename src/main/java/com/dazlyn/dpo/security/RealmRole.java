@@ -1,9 +1,9 @@
-package com.dazlyn.dpo.web.security;
+package com.dazlyn.dpo.security;
 
-public enum StudioRole {
+public enum RealmRole {
 
-    EMPLOYEE,
     ADMIN,
+    STUDIO_ADMIN,
     INSTRUCTOR,
     DIRECTOR,
     ASSISTANT,
