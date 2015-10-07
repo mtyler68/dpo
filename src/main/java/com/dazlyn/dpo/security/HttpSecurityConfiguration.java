@@ -1,4 +1,4 @@
-package com.dazlyn.dpo.web.security;
+package com.dazlyn.dpo.security;
 
 import javax.enterprise.event.Observes;
 import org.picketlink.config.SecurityConfigurationBuilder;
@@ -17,12 +17,12 @@ public class HttpSecurityConfiguration {
                 .http()
                 .forPath("/back/*")
                 .authorizeWith()
-                .role(StudioRole.EMPLOYEE.name())
+                .expression("#{authorizationChecker.hasAnyRealmRole(['ADMIN','INSTRUCTOR'])}")
                 .redirectTo("/access-denied.xhtml").whenForbidden()
                 .http()
                 .forPath("/back/admin/*")
                 .authorizeWith()
-                .role(StudioRole.ADMIN.name())
+                .role(RealmRole.ADMIN.name())
                 .redirectTo("/access-denied.xhtml").whenForbidden();
     }
 }

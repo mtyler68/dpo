@@ -1,4 +1,4 @@
-package com.dazlyn.dpo.web.util;
+package com.dazlyn.dpo.util;
 
 import javax.enterprise.inject.Produces;
 import org.picketlink.idm.config.IdentityConfiguration;
