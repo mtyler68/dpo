@@ -16,12 +16,23 @@ public class PersonManager {
     @PersistenceContext
     private EntityManager em;
 
-
     @Transactional
     public void add(Person person) {
         if (person.getUid() == null) {
             person.setUid(UUID.randomUUID().toString());
         }
+        em.persist(person);
+    }
+
+    public void flush() {
+        em.flush();
+    }
+
+    public Person find(String uid) {
+        return em.find(Person.class, uid);
+    }
+
+    public void persist(Person person) {
         em.persist(person);
     }
 }

@@ -35,13 +35,12 @@ public class Person implements Serializable {
     @Column(name = "user_id")
     private String userId;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "studio_uid")
     private Studio studio;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "family_uid")
+    @JoinColumn(name = "family_uid", insertable = false, updatable = false)
     private Family family;
 
     /**

@@ -36,6 +36,7 @@ public class Family implements Serializable {
     @JoinColumn(name = "studio_uid")
     private Studio studio;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "family")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "family_uid")
     private List<Person> members = new ArrayList<>();
 }
