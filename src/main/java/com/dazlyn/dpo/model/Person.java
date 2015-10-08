@@ -18,7 +18,9 @@ import lombok.experimental.Builder;
 @Entity(name = "person")
 @NamedQueries({
     @NamedQuery(name = "Person.findByStudio",
-            query = "SELECT p FROM person p WHERE p.studio = :studio")
+            query = "SELECT p FROM person p WHERE p.studio = :studio"),
+    @NamedQuery(name = "Person.findStudentsByStudio",
+            query = "SELECT p FROM person p WHERE p.studio = :studio AND p.typeStudent = TRUE")
 })
 @Data
 @Builder
@@ -45,7 +47,7 @@ public class Person implements Serializable {
     @JoinColumn(name = "studio_uid")
     private Studio studio;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "family_uid", insertable = false, updatable = false)
     private Family family;
 
