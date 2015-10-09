@@ -8,21 +8,16 @@ public class HttpSecurityConfiguration {
 
     public void onInit(@Observes SecurityConfigurationEvent evt) {
         SecurityConfigurationBuilder builder = evt.getBuilder();
-        builder
-                //.http()
-                //.forPath("/studios/{identity.account.partition.name}/back/*")
-                //.authorizeWith()
-                //.expression("#{identity.account.partition.name}")
-                //.redirectTo("/access-denied.xhtml").whenForbidden()
-                .http()
-                .forPath("/back/*")
-                .authorizeWith()
-                .expression("#{authorizationChecker.hasAnyRealmRole(['ADMIN','INSTRUCTOR'])}")
-                .redirectTo("/access-denied.xhtml").whenForbidden()
-                .http()
-                .forPath("/back/admin/*")
-                .authorizeWith()
-                .role(RealmRole.ADMIN.name())
-                .redirectTo("/access-denied.xhtml").whenForbidden();
+//        builder
+//                .http()
+//                .forPath("/back/*")
+//                .authorizeWith()
+//                .expression("#{authorizationChecker.hasAnyRealmRole(['ADMIN','INSTRUCTOR'])}")
+//                .redirectTo("/access-denied.xhtml").whenForbidden()
+//                .http()
+//                .forPath("/back/admin/*")
+//                .authorizeWith()
+//                .role(RealmRole.ADMIN.name())
+//                .redirectTo("/access-denied.xhtml").whenForbidden();
     }
 }

@@ -32,6 +32,11 @@
     <view-id value="/back/studio/families.xhtml"/>
   </url-mapping>
   
+  <url-mapping id="students">
+    <pattern value="/back/studio/students"/>
+    <view-id value="/back/studio/students.xhtml"/>
+  </url-mapping>
+  
   <url-mapping id="familyDashboard">
     <pattern value="/back/studio/family/#{familyUid}"/>
     <view-id value="/back/studio/family-dashboard.xhtml"/>

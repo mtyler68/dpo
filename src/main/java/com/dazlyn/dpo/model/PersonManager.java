@@ -42,4 +42,10 @@ public class PersonManager {
                 .setParameter("studio", studio)
                 .getResultList();
     }
+
+    public List<Person> findStudentsByStudio(Studio studio) {
+        return em.createNamedQuery("Person.findStudentsByStudio", Person.class)
+                .setParameter("studio", studio)
+                .getResultList();
+    }
 }
