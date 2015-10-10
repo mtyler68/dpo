@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+  <cc:interface>
+    <cc:attribute name="currentStep"/>
+    <cc:attribute name="stepTitles"/>
+  </cc:interface>
+
+  <cc:implementation>
+    <p:steps activeIndex="#{cc.attrs.currentStep}">
+      <c:forEach items="#{cc.attrs.stepTitles}" var="title">
+        <p:menuitem value="#{title}"/>
+      </c:forEach>
+    </p:steps>
+    <style type="text/css">
+      .ui-steps .ui-steps-item {
+        width: #{99/(cc.attrs.stepTitles.size())}%;
+      }
+    </style>
+  </cc:implementation>
+</html>

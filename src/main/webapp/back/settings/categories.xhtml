@@ -1,0 +1,146 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+  <ui:define name="subheader">
+    Page Header
+  </ui:define>
+
+  <ui:define name="content">
+
+    <div class="Container100">
+      <div class="ContainerIndent">
+        <div class="Card ShadowEffect TexAlCenter">
+          <br/>
+          <h:form id="form">
+            <p:tooltip/>
+            <div class="Container20 Responsive50">
+              <div class="ContainerIndent">
+                <h2 class="BigTopic">Categories</h2>
+                <div class="TexAlLeft">
+
+                  <p:selectOneListbox id="categoriesList" value="#{categoriesController.selectedCategory}"
+                                      style="width:270px;">
+                    <p:ajax listener="#{categoriesController.onCategoryChange}" update="optionTable"/>
+                    <f:selectItems value="#{categoriesController.categoryList}" var="_category" 
+                                   itemLabel="#{_category.label}" itemValue="#{_category}"/>
+                  </p:selectOneListbox>
+                </div>
+              </div>
+            </div>
+            <div class="Container50 Responsive50">
+              <div class="ContainerIndent">
+                <h2 class="BigTopic">Options</h2>
+                <div class="TexAlLeft">
+                  <p:dataTable id="optionTable" value="#{categoriesController.options}" var="_option"
+                               selectionMode="single" selection="#{categoriesController.selectedOption}" rowKey="#{_option.value}"
+                               draggableRows="true">
+
+                    <p:ajax event="rowSelect" listener="#{categoriesController.onOptionSelected}" update="editButton deleteButton :form:optionDlg :form:removeDlg"/>
+                    <p:ajax event="rowUnselect" listener="#{categoriesController.onOptionUnselected}" update="editButton deleteButton :form:optionDlg :form:removeDlg"/>
+                    <p:ajax event="rowReorder" listener="#{categoriesController.onOptionReorder}" update="optionTable"/>
+
+                    <f:facet name="header">
+                      <div class="TexAlRight">
+                        <p:commandButton id="addButton" value="Add Option" icon="fa fa-plus Fs16 White"
+                                         disabled="#{categoriesController.selectedCategory eq null}">
+                          <p:ajax listener="#{categoriesController.onPreAddOption()}" oncomplete="PF('newOptionDlg').show()"
+                                  update=":form:newOptionDlg"/>
+                        </p:commandButton>
+                        <p:commandButton id="editButton" value="Edit" icon="fa fa-edit Fs16 White"
+                                         disabled="#{categoriesController.selectedOption eq null}"
+                                         onclick="PF('optionDlg').show()"/>
+                        <p:commandButton id="deleteButton" value="Remove" icon="fa fa-trash-o Fs16 White"
+                                         disabled="#{categoriesController.selectedOption eq null}"
+                                         onclick="PF('removeDlg').show()">                          
+                        </p:commandButton>
+                      </div>
+                    </f:facet>
+
+                    <p:column headerText="Category">
+                      <h:outputText value="#{_option.category.label}"/>
+                    </p:column>
+
+                    <p:column headerText="Option">
+                      <h:outputText value="#{_option.value}"/>
+                    </p:column>
+                  </p:dataTable>
+
+
+                </div>
+              </div>
+            </div>
+
+            <p:dialog id="optionDlg" widgetVar="optionDlg" modal="true" showEffect="slide" hideEffect="slide"
+                      width="600" header="Option Details" closable="true">
+              <div class="Container100">
+                <div class="Container40 TexAlLeft">
+                  <h:panelGrid columns="1" cellpadding="5">
+                    <p:outputLabel value="Category:"/>
+                    <p:inputText value="#{categoriesController.selectedCategory.label}" disabled="true"/>
+                  </h:panelGrid>
+                </div>
+                <div class="Container60 Responsive50 TexAlLeft">
+                  <h:panelGrid columns="1" cellpadding="5">
+                    <p:outputLabel value="Option:"/>
+                    <p:inputText value="#{categoriesController.selectedOption.value}" style="width:95%;"/>
+                  </h:panelGrid>
+                </div>
+              </div>
+
+              <f:facet name="footer">
+                <div class="TexAlRight">
+                  <p:commandButton value="Save" actionListener="#{categoriesController.save()}" oncomplete="PF('optionDlg').hide();" update=":form:optionTable"/>
+                  <p:commandButton value="Cancel" onclick="PF('optionDlg').hide();"/>
+                </div>
+              </f:facet>
+            </p:dialog>
+            
+            <p:dialog id="newOptionDlg" widgetVar="newOptionDlg" modal="true" showEffect="slide" hideEffect="slide"
+                      width="600" header="Add Option" closable="true">
+              <div class="Container100">
+                <div class="Container40 TexAlLeft">
+                  <h:panelGrid columns="1" cellpadding="5">
+                    <p:outputLabel value="Category:"/>
+                    <p:inputText value="#{categoriesController.selectedCategory.label}" disabled="true"/>
+                  </h:panelGrid>
+                </div>
+                <div class="Container60 Responsive50 TexAlLeft">
+                  <h:panelGrid columns="1" cellpadding="5">
+                    <p:outputLabel value="Option:"/>
+                    <p:inputText value="#{categoriesController.optionValue}" style="width:95%;"/>
+                  </h:panelGrid>
+                </div>
+              </div>
+
+              <f:facet name="footer">
+                <div class="TexAlRight">
+                  <p:commandButton value="Save" actionListener="#{categoriesController.addOption}" oncomplete="PF('newOptionDlg').hide();" update=":form:optionTable"/>
+                  <p:commandButton value="Cancel" onclick="PF('newOptionDlg').hide();"/>
+                </div>
+              </f:facet>
+            </p:dialog>
+
+            <p:confirmDialog id="removeDlg" widgetVar="removeDlg" showEffect="slide" hideEffect="slide" severity="alert"
+                             header="Confirm Remove">
+              <f:facet name="message">
+                <h:outputText value="Are you sure you want to remove the '#{categoriesController.selectedOption.value}' option?"/>
+              </f:facet>
+              <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
+                <p:ajax listener="#{categoriesController.deleteSelectedOption()}" update=":form:optionTable"
+                        oncomplete="PF('removeDlg').hide()"/>
+              </p:commandButton>
+              <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" 
+                               onclick="PF('removeDlg').hide()"/>
+            </p:confirmDialog>
+          </h:form>
+        </div>
+      </div>
+    </div>
+
+  </ui:define>
+
+</ui:composition>

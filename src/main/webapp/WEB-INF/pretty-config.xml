@@ -41,4 +41,14 @@
     <pattern value="/back/studio/family/#{familyUid}"/>
     <view-id value="/back/studio/family-dashboard.xhtml"/>
   </url-mapping>
+  
+  <url-mapping id="categories">
+    <pattern value="/back/settings/categories"/>
+    <view-id value="/back/settings/categories.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="newStudentWizrd">
+    <pattern value="/back/studio/newStudentWizard"/>
+    <view-id value="/back/studio/new-student-wizard.xhtml"/>
+  </url-mapping>
 </pretty-config>

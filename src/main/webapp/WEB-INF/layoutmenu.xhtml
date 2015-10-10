@@ -22,6 +22,10 @@
           <p:menuitem id="rm_classes" value="Classes" icon="icon-class"/>
           <p:menuitem id="rm_schedule" value="Schedule" icon="fa fa-calendar"/>
         </p:submenu>
+        
+        <p:submenu id="rm_settings" label="Settings" icon="icon-cog">
+          <p:menuitem id="rm_categories" value="Categories" outcome="pretty:categories"/>
+        </p:submenu>
 
         <p:submenu id="colors" label="Color Variations" icon="icon-color_lens">
           <p:menuitem id="gray_geometric" value="Gray" icon="icon-colorize" url="#" onclick="$('body').attr('class', '').addClass('GrayModena Geometry');"/>

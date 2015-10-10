@@ -1,6 +1,5 @@
 package com.dazlyn.dpo.model;
 
-import com.dazlyn.dpo.model.Studio;
 import com.dazlyn.dpo.security.RealmManager;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +30,18 @@ public class StudioManager {
     @Inject
     private EntityManager em;
 
+    private static final Object[][] CATEGORIES = {
+        {Category.BILLING_SCHEDULE, "Monthly", "Quarterly", "Yearly", "Drop In Class", "Weekly"},
+        {Category.CHARGE_CATEGORY, "2015-10 October", "2015-11 November", "2015-12 December",
+            "2016 Spring Recital Fee", "Workshop Fee", "Registration Fee"},
+        {Category.CLASS_GENRE, "Ballet", "Contemporary", "Hip Hop", "Jazz", "Pointe", "Tap"},
+        {Category.CLASS_LEVEL, "Toddler", "Pre-school", "Kindergarten", "Beginner", "Intermediate", "Advanced"},
+        {Category.CLASS_LOCATION, "Coronado", "Downtown"},
+        {Category.CLASS_PROGRAM, "Recital", "Competition"},
+        {Category.PAYMENT_METHOD, "Credit Card", "Cash", "Check", "Gift Certificate", "Other", "PayPal", "Scholarship"},
+        {Category.PAYMENT_SCHEDULE, "Monthly Payments", "Quarterly Payments", "Yearly Payments"}
+    };
+
     @Transactional
     public void add(Studio studio) {
 
@@ -38,6 +49,7 @@ public class StudioManager {
             studio.setUid(UUID.randomUUID().toString());
         }
         em.persist(studio);
+        addCategories(studio);
     }
 
     public List<Studio> findAll() {
@@ -57,6 +69,23 @@ public class StudioManager {
                 .setParameter("realmId", realmId);
         List results = query.getResultList();
         return (Studio) (results.isEmpty() ? null : results.get(0));
+    }
+
+    private void addCategories(Studio studio) {
+        for (Object[] options : CATEGORIES) {
+            Category category = (Category) options[0];
+            for (int optionIndex = 1; optionIndex < options.length; optionIndex++) {
+                CategoryOption option = CategoryOption.builder()
+                        .category(category)
+                        .sortOrder(optionIndex)
+                        .studio(studio)
+                        .uid(UUID.randomUUID().toString())
+                        .value((String) options[optionIndex])
+                        .build();
+                em.persist(option);
+            }
+            em.flush();
+        }
     }
 
 }
