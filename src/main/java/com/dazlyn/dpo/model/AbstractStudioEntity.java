@@ -14,6 +14,6 @@ import lombok.Setter;
 public abstract class AbstractStudioEntity extends AbstractEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "studio_uid")
+    @JoinColumn(name = "studio_uid", nullable = false)
     private Studio studio;
 }

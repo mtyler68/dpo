@@ -11,6 +11,8 @@ import com.dazlyn.dpo.model.Person;
 import com.dazlyn.dpo.model.PersonManager;
 import com.dazlyn.dpo.model.Studio;
 import com.dazlyn.dpo.model.StudioManager;
+import com.dazlyn.dpo.model.StudioSettings;
+import com.dazlyn.dpo.model.StudioSettingsManager;
 import com.dazlyn.dpo.security.RealmManager;
 import com.dazlyn.dpo.security.RealmRole;
 import com.dazlyn.dpo.security.UserManager;
@@ -68,6 +70,9 @@ public class IdmPopulator {
     @Inject
     private CategoryManager categoryManager;
 
+    @Inject
+    private StudioSettingsManager studioSettingsManager;
+
     private List<NameEntry> names;
 
     private Random rand = new Random(System.currentTimeMillis());
@@ -88,6 +93,11 @@ public class IdmPopulator {
             // Coronado Dance
             Realm cadRealm = realmManager.createRealm("coronadodance");
             Studio cadStudio = createStudio(cadRealm, "Coronado Academy of Dance");
+
+            StudioSettings cadSettings = new StudioSettings();
+            cadSettings.setStudio(cadStudio);
+            studioSettingsManager.persist(cadSettings);
+
 
             Person indiaPerson = createPerson(cadRealm, cadStudio, "india", "india",
                     "india@coronadodance.com", "India", "Instructor", true, false, false, RealmRole.INSTRUCTOR);

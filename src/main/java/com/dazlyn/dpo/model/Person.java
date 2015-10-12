@@ -1,11 +1,14 @@
 package com.dazlyn.dpo.model;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -67,4 +70,12 @@ public class Person implements Serializable {
      * When true, this person is an employee and will show up in employee related lists, which can include instructors.
      */
     private boolean typeEmployee;
+
+    @ManyToMany(
+            targetEntity = GroupClass.class,
+            mappedBy = "students",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.LAZY
+    )
+    private List<GroupClass> groupClasses;
 }

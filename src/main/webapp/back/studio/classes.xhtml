@@ -16,30 +16,62 @@
         <div class="Card ShadowEffect TexAlCenter">
           <br/>
           <h:form id="form">
-            
-            <p:dataTable id="classesTable" value="#{groupClassView.groupClasses}" var="groupClass"
+
+            <p:dataTable id="classesTable" value="#{groupClassesView.groupClasses}" var="groupClass"
                          widgetVar="classesTable"
-                         filteredValue="#{groupClassView.filteredGroupClasses}">
-            
+                         filteredValue="#{groupClassesView.filteredGroupClasses}">
+
+              <f:facet name="header">
+                <div class="TexAlRight">
+                  <p:splitButton value="Add Class"  icon="fa fa-plus Fs16 White"
+                                 styleClass="GreenButton">
+                    <p:menuitem value="Add class wizard..."/>
+                  </p:splitButton>
+                  <p:commandButton id="addButton" value="Add Class" icon="fa fa-plus Fs16 White"
+                                   styleClass="GreenButton">
+                    <p:ajax listener="#{groupClassesView.prepareNewGroupClass()}" oncomplete="PF('newClassDlg').show()"
+                            update=":form:newClassDlg"/>
+                  </p:commandButton>
+                </div>
+              </f:facet>
+
               <p:column headerText="Title">
                 <h:outputText value="#{groupClass.title}"/>
               </p:column>
-              
+
               <p:column headerText="Genre"
                         filterBy="#{groupClass.genre.value}" filterMatchMode="exact">
                 <f:facet name="filter">
                   <p:selectOneMenu onchange="PF('classesTable').filter()">
                     <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
-                    <f:selectItems value="#{groupClassView.genres}" var="genre" itemLabel="#{genre.value}" itemValue="#{genre.value}"/>
+                    <f:selectItems value="#{groupClassesView.genres}" var="genre" itemLabel="#{genre.value}" itemValue="#{genre.value}"/>
                   </p:selectOneMenu>
                 </f:facet>
                 <h:outputText value="#{groupClass.genre.value}"/>
               </p:column>
-              
+
               <p:column headerText="Level">
                 <h:outputText value="#{groupClass.classLevel.value}"/>
               </p:column>
+
+              <p:column headerText="Actions">
+                <p:button icon="fa fa-pencil-square-o Fs16 White" title="Class dashboard" outcome="pretty:classDashboard">
+                  <f:param name="groupClassUid" value="#{groupClass.uid}"/>
+                </p:button>
+              </p:column>
             </p:dataTable>
+
+            <p:dialog id="newClassDlg" widgetVar="newClassDlg" modal="true" showEffect="slide" hideEffect="slide"
+                      width="600" header="Add Class" closable="true">
+
+              <f:facet name="footer">
+                <div class="TexAlRight">
+                  <p:commandButton value="Save" oncomplete="PF('newClassDlg').hide();" update=":form:classesTable"/>
+                  <p:commandButton value="Cancel" onclick="PF('newClassDlg').hide();"/>
+                </div>
+              </f:facet>
+            </p:dialog>
+
           </h:form>
           <br/><br/>
         </div>

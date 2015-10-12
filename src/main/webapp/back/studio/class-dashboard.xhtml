@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+  <ui:define name="subheader">
+    <h:form>
+      <p:breadCrumb>
+        <p:menuitem value="Dashboard" outcome="pretty:dashboard"/>
+        <p:menuitem value="Classes" outcome="pretty:classes"/>
+        <p:menuitem value="Class Dashboard"/>
+      </p:breadCrumb>
+    </h:form>
+  </ui:define>
+
+  <ui:define name="content">
+    <f:metadata>
+      <f:viewParam name="groupClassUid" value="#{groupClassDashboardView.groupClassUid}"/>
+    </f:metadata>
+    <div class="Container100">
+      <div class="ContainerIndent">
+        <div class="Card ShadowEffect TexAlCenter">
+          <h:form id="form">
+            <p:tabView style="margin:-20px; border:none 0px;">
+
+              <p:tab title="Class">
+
+              </p:tab>
+
+              <p:tab title="Students">
+
+              </p:tab>
+
+              <p:tab title="Schedule">
+
+              </p:tab>
+            </p:tabView>
+          </h:form>
+        </div>
+      </div>
+    </div>
+
+  </ui:define>
+
+</ui:composition>

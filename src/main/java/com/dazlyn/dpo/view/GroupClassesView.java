@@ -16,7 +16,7 @@ import lombok.Setter;
 
 @Named
 @ViewScoped
-public class GroupClassView extends AbstractStudioView implements Serializable {
+public class GroupClassesView extends AbstractStudioView implements Serializable {
 
     @Getter
     private List<GroupClass> groupClasses;
@@ -28,6 +28,10 @@ public class GroupClassView extends AbstractStudioView implements Serializable {
     @Getter
     @Setter
     private GroupClass selectedGroupClass;
+
+    @Getter
+    @Setter
+    private GroupClass newGroupClass;
 
     @Getter
     private List<CategoryOption> genres;
@@ -50,5 +54,13 @@ public class GroupClassView extends AbstractStudioView implements Serializable {
 
     private void loadGenres() {
         genres = categoryManager.findForCategory(getStudio(), Category.CLASS_GENRE);
+    }
+
+    public void archiveSelectedGroupClass() {
+        // TODO Not only archive this class, but archive all the enrollment in this class and schedules as well.
+    }
+
+    public void prepareNewGroupClass() {
+        newGroupClass = new GroupClass();
     }
 }
