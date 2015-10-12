@@ -46,16 +46,19 @@
                     <f:facet name="header">
                       <div class="TexAlRight">
                         <p:commandButton id="addButton" value="Add Option" icon="fa fa-plus Fs16 White"
-                                         disabled="#{categoriesController.selectedCategory eq null}">
+                                         disabled="#{categoriesController.selectedCategory eq null}"
+                                          styleClass="GreenButton">
                           <p:ajax listener="#{categoriesController.onPreAddOption()}" oncomplete="PF('newOptionDlg').show()"
                                   update=":form:newOptionDlg"/>
                         </p:commandButton>
                         <p:commandButton id="editButton" value="Edit" icon="fa fa-edit Fs16 White"
                                          disabled="#{categoriesController.selectedOption eq null}"
-                                         onclick="PF('optionDlg').show()"/>
+                                         onclick="PF('optionDlg').show()"
+                                          styleClass="OrangeButton"/>
                         <p:commandButton id="deleteButton" value="Remove" icon="fa fa-trash-o Fs16 White"
                                          disabled="#{categoriesController.selectedOption eq null}"
-                                         onclick="PF('removeDlg').show()">                          
+                                         onclick="PF('removeDlg').show()"
+                                          styleClass="RedButton">                          
                         </p:commandButton>
                       </div>
                     </f:facet>

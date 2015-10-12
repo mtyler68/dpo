@@ -65,6 +65,8 @@ public class CategoriesController extends AbstractSecureController implements Se
         options.remove(selectedOption);
         selectedOption = null;
         updateSortOrders();
+
+        // TODO: Move to archive state and not deleted for record keeping purposes
     }
 
     @Transactional

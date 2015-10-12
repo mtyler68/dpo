@@ -1,7 +1,11 @@
 package com.dazlyn.dpo.startup;
 
+import com.dazlyn.dpo.model.Category;
+import com.dazlyn.dpo.model.CategoryManager;
+import com.dazlyn.dpo.model.CategoryOption;
 import com.dazlyn.dpo.model.Family;
 import com.dazlyn.dpo.model.FamilyManager;
+import com.dazlyn.dpo.model.GroupClass;
 import com.dazlyn.dpo.model.GroupClassManager;
 import com.dazlyn.dpo.model.Person;
 import com.dazlyn.dpo.model.PersonManager;
@@ -22,6 +26,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.picketlink.idm.PartitionManager;
 import org.picketlink.idm.model.basic.Realm;
@@ -31,6 +36,13 @@ import org.picketlink.idm.model.basic.User;
 @javax.ejb.Startup
 @Slf4j
 public class IdmPopulator {
+
+    private static final ClassDef[] GROUP_CLASSES = {
+        ClassDef.builder().title("Ballet 5").genre("Ballet").level("Advanced").build(),
+        ClassDef.builder().title("Ballet 3").genre("Ballet").level("Intermediate").build(),
+        ClassDef.builder().title("Ballet 1").genre("Ballet").level("Beginner").build(),
+        ClassDef.builder().title("DanceFUN").genre("Combo").level("Toddler").build()
+    };
 
     @Inject
     private StudioManager studioManager;
@@ -52,6 +64,9 @@ public class IdmPopulator {
 
     @Inject
     private FamilyManager familyManager;
+
+    @Inject
+    private CategoryManager categoryManager;
 
     private List<NameEntry> names;
 
@@ -76,10 +91,12 @@ public class IdmPopulator {
 
             Person indiaPerson = createPerson(cadRealm, cadStudio, "india", "india",
                     "india@coronadodance.com", "India", "Instructor", true, false, false, RealmRole.INSTRUCTOR);
+            addClasses(cadStudio, indiaPerson);
 
             // Epic Dance
             Realm epicRealm = realmManager.createRealm("epicdance");
             Studio epicStudio = createStudio(epicRealm, "Epic Dance");
+            addClasses(epicStudio, indiaPerson);
 
             try {
                 loadNames();
@@ -176,7 +193,6 @@ public class IdmPopulator {
 
             family = familyManager.find(family.getUid());
 
-
             for (int ndx = 0; ndx < numStudents; ndx++) {
                 if (!it.hasNext()) {
                     it = names.iterator();
@@ -199,6 +215,23 @@ public class IdmPopulator {
         return it;
     }
 
+    private void addClasses(Studio cadStudio, Person... instructors) {
+        int insIndex = 0;
+        for (ClassDef classDef : GROUP_CLASSES) {
+            CategoryOption genreOption = classDef.getGenre() == null ? null
+                    : categoryManager.findForOption(cadStudio, Category.CLASS_GENRE, classDef.getGenre());
+            CategoryOption levelOption = classDef.getLevel() == null ? null
+                    : categoryManager.findForOption(cadStudio, Category.CLASS_LEVEL, classDef.getLevel());
+            GroupClass gc = GroupClass.builder()
+                    .genre(genreOption)
+                    .classLevel(levelOption)
+                    .title(classDef.title)
+                    .build();
+            gc.setStudio(cadStudio);
+            groupClassManager.persist(gc);
+        }
+    }
+
     @Data
     @RequiredArgsConstructor
     private class NameEntry {
@@ -206,5 +239,16 @@ public class IdmPopulator {
         private final String firstName;
 
         private final String lastName;
+    }
+
+    @Data
+    @Builder
+    private static class ClassDef {
+
+        private String title;
+
+        private String genre;
+
+        private String level;
     }
 }

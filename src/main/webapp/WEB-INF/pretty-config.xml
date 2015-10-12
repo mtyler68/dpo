@@ -51,4 +51,9 @@
     <pattern value="/back/studio/newStudentWizard"/>
     <view-id value="/back/studio/new-student-wizard.xhtml"/>
   </url-mapping>
+  
+  <url-mapping id="classes">
+    <pattern value="/back/studio/classes"/>
+    <view-id value="/back/studio/classes.xhtml"/>
+  </url-mapping>
 </pretty-config>

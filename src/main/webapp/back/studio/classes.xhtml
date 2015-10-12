@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+  <ui:define name="subheader">
+    Classes
+  </ui:define>
+
+  <ui:define name="content">
+
+    <div class="Container100">
+      <div class="ContainerIndent">
+        <div class="Card ShadowEffect TexAlCenter">
+          <br/>
+          <h:form id="form">
+            
+            <p:dataTable id="classesTable" value="#{groupClassView.groupClasses}" var="groupClass"
+                         widgetVar="classesTable"
+                         filteredValue="#{groupClassView.filteredGroupClasses}">
+            
+              <p:column headerText="Title">
+                <h:outputText value="#{groupClass.title}"/>
+              </p:column>
+              
+              <p:column headerText="Genre"
+                        filterBy="#{groupClass.genre.value}" filterMatchMode="exact">
+                <f:facet name="filter">
+                  <p:selectOneMenu onchange="PF('classesTable').filter()">
+                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
+                    <f:selectItems value="#{groupClassView.genres}" var="genre" itemLabel="#{genre.value}" itemValue="#{genre.value}"/>
+                  </p:selectOneMenu>
+                </f:facet>
+                <h:outputText value="#{groupClass.genre.value}"/>
+              </p:column>
+              
+              <p:column headerText="Level">
+                <h:outputText value="#{groupClass.classLevel.value}"/>
+              </p:column>
+            </p:dataTable>
+          </h:form>
+          <br/><br/>
+        </div>
+      </div>
+    </div>
+
+  </ui:define>
+
+</ui:composition>

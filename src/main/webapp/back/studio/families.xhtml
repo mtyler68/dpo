@@ -13,7 +13,7 @@
     <ui:decorate template="/WEB-INF/templates/pagecontainer.xhtml">
       <ui:define name="content">
         <br/>
-        <h:form>
+        <h:form id="form">
           <p:growl id="growl" showDetail="true"/>
 
           <div class="TexAlRight">
@@ -34,10 +34,6 @@
               </p:outputPanel>
             </f:facet>
 
-            <p:column headerText="Actions">
-              <p:link value="Family" title="Family account" class="icon-people" href="/back/studio/family/#{_family.uid}"/>
-            </p:column>
-
             <p:column headerText="First Name" sortBy="#{_family.mainPerson.firstName}" 
                       filterMatchMode="startsWith" filterBy="#{_family.mainPerson.firstName}" filterable="false">
               <h:outputText value="#{_family.mainPerson.firstName}"/>
@@ -49,6 +45,17 @@
             <p:column headerText="Email">
               <h:outputText value="#{_family.mainPerson.email}"/>
             </p:column>
+
+            <p:column headerText="Actions">
+              <p:button icon="fa fa-users Fs16 White" title="Family account" outcome="pretty:familyDashboard">
+                <f:param name="familyUid" value="#{_family.uid}"/>
+              </p:button>
+              <p:commandButton icon="fa fa-trash-o Fs16 White" title="Remove" styleClass="RedButton"
+                               update=":form:removeDlg" oncomplete="PF('removeDlg').show()">
+                <f:setPropertyActionListener value="#{_family}" target="#{familiesController.selectedFamily}"/>
+              </p:commandButton>
+            </p:column>
+
           </p:dataTable>
 
 
@@ -73,6 +80,19 @@
             </p:panelGrid>
 
           </p:dialog>
+
+          <p:confirmDialog id="removeDlg" widgetVar="removeDlg" showEffect="slide" hideEffect="slide" severity="alert"
+                           header="Confirm Remove">
+            <f:facet name="message">
+              <h:outputText value="Are you sure you want to remove the '#{familiesController.selectedFamily.mainPerson.lastName}' family?"/>
+            </f:facet>
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
+              <p:ajax listener="#{familiesController.removeSelectedFamily()}" update=":form:families"
+                      oncomplete="PF('removeDlg').hide()"/>
+            </p:commandButton>
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" 
+                             onclick="PF('removeDlg').hide()"/>
+          </p:confirmDialog>
         </h:form>
         <br/><br/>
       </ui:define>

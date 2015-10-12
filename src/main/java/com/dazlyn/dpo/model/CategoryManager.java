@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 
 @Named
 @ApplicationScoped
-public class CategoryManager {
+public class CategoryManager extends AbstractEntityManager<String, CategoryOption> {
 
     @PersistenceContext
     private EntityManager em;
@@ -20,19 +20,19 @@ public class CategoryManager {
                 .getResultList();
     }
 
-    public CategoryOption find(String uid) {
-        return em.find(CategoryOption.class, uid);
-    }
-
-    public void remove(CategoryOption option) {
-        em.remove(option);
-    }
-
-    public void persist(CategoryOption option) {
-        em.persist(option);
-    }
-
-    public void merge(CategoryOption option) {
-        em.merge(option);
+    /**
+     *
+     * @param studio
+     * @param category
+     * @param value
+     * @return Can return null if not found.
+     */
+    public CategoryOption findForOption(Studio studio, Category category, String value) {
+        List<CategoryOption> results = em.createNamedQuery("CategoryOption.findForOption", CategoryOption.class)
+                .setParameter("studio", studio)
+                .setParameter("category", category)
+                .setParameter("value", value)
+                .getResultList();
+        return results.isEmpty() ? null : results.get(0);
     }
 }

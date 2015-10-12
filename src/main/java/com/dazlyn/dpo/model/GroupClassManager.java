@@ -1,15 +1,25 @@
 package com.dazlyn.dpo.model;
 
+import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
-import org.picketlink.idm.PartitionManager;
 
 @Named
 @ApplicationScoped
-public class GroupClassManager {
+public class GroupClassManager extends AbstractEntityManager<String, GroupClass> {
 
-    @Inject
-    private PartitionManager partitionManager;
+    public GroupClassManager() {
+        super(String.class, GroupClass.class);
+    }
 
+    public List<GroupClass> findAllByStudio(Studio studio) {
+        return findAllByStudio(studio, false);
+    }
+
+    public List<GroupClass> findAllByStudio(Studio studio, boolean archived) {
+        return getEntityManager().createNamedQuery("GroupClass.findAllByStudio", GroupClass.class)
+                .setParameter("studio", studio)
+                .setParameter("archived", archived)
+                .getResultList();
+    }
 }

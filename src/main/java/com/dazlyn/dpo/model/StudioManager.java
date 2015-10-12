@@ -34,7 +34,7 @@ public class StudioManager {
         {Category.BILLING_SCHEDULE, "Monthly", "Quarterly", "Yearly", "Drop In Class", "Weekly"},
         {Category.CHARGE_CATEGORY, "2015-10 October", "2015-11 November", "2015-12 December",
             "2016 Spring Recital Fee", "Workshop Fee", "Registration Fee"},
-        {Category.CLASS_GENRE, "Ballet", "Contemporary", "Hip Hop", "Jazz", "Pointe", "Tap"},
+        {Category.CLASS_GENRE, "Ballet", "Contemporary", "Hip Hop", "Jazz", "Pointe", "Tap", "Combo"},
         {Category.CLASS_LEVEL, "Toddler", "Pre-school", "Kindergarten", "Beginner", "Intermediate", "Advanced"},
         {Category.CLASS_LOCATION, "Coronado", "Downtown"},
         {Category.CLASS_PROGRAM, "Recital", "Competition"},

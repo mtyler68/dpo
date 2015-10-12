@@ -13,6 +13,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Builder;
 
 @Entity(name = "person")
@@ -26,6 +27,7 @@ import lombok.experimental.Builder;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString(exclude = {"family", "studio"})
 public class Person implements Serializable {
 
     @Id
