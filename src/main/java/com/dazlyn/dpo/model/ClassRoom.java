@@ -1,14 +1,16 @@
 package com.dazlyn.dpo.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "location")
+@Table(name = "class_room")
 @Data
-public class Location extends AbstractArchivableStudioEntity implements Serializable {
+public class ClassRoom extends AbstractArchivableStudioEntity implements Serializable {
 
+    @Column(length = 100)
     private String name;
 }
