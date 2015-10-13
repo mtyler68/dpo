@@ -38,6 +38,7 @@ public class StudioManager {
         {Category.CLASS_LEVEL, "Toddler", "Pre-school", "Kindergarten", "Beginner", "Intermediate", "Advanced"},
         {Category.CLASS_LOCATION, "Coronado", "Downtown"},
         {Category.CLASS_PROGRAM, "Recital", "Competition"},
+        {Category.PAYMENT_CYCLE, "Billing Schedule", "Drop-in"},
         {Category.PAYMENT_METHOD, "Credit Card", "Cash", "Check", "Gift Certificate", "Other", "PayPal", "Scholarship"},
         {Category.PAYMENT_SCHEDULE, "Monthly Payments", "Quarterly Payments", "Yearly Payments"}
     };

@@ -12,6 +12,7 @@ public enum Category {
     CLASS_LEVEL("Class Level"),
     CLASS_LOCATION("Class Location"),
     CLASS_PROGRAM("Class Program"),
+    PAYMENT_CYCLE("Payment Cycle"),
     PAYMENT_METHOD("Payment Method"),
     PAYMENT_SCHEDULE("Payment Schedule");
 

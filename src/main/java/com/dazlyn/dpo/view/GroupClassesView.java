@@ -33,9 +33,6 @@ public class GroupClassesView extends AbstractStudioView implements Serializable
     @Setter
     private GroupClass newGroupClass;
 
-    @Getter
-    private List<CategoryOption> genres;
-
     @Inject
     private GroupClassManager groupClassManager;
 
@@ -45,15 +42,11 @@ public class GroupClassesView extends AbstractStudioView implements Serializable
     @PostConstruct
     public void init() {
         loadGroupClasses();
-        loadGenres();
+        newGroupClass = new GroupClass();
     }
 
     private void loadGroupClasses() {
         groupClasses = groupClassManager.findAllByStudio(getStudio());
-    }
-
-    private void loadGenres() {
-        genres = categoryManager.findForCategory(getStudio(), Category.CLASS_GENRE);
     }
 
     public void archiveSelectedGroupClass() {
@@ -62,5 +55,9 @@ public class GroupClassesView extends AbstractStudioView implements Serializable
 
     public void prepareNewGroupClass() {
         newGroupClass = new GroupClass();
+    }
+
+    public List<CategoryOption> categoryOptions(String category) {
+        return categoryManager.findForCategory(getStudio(), Category.valueOf(category));
     }
 }

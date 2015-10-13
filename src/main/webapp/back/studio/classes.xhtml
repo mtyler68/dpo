@@ -16,6 +16,7 @@
         <div class="Card ShadowEffect TexAlCenter">
           <br/>
           <h:form id="form">
+            <p:tooltip/>
 
             <p:dataTable id="classesTable" value="#{groupClassesView.groupClasses}" var="groupClass"
                          widgetVar="classesTable"
@@ -23,10 +24,6 @@
 
               <f:facet name="header">
                 <div class="TexAlRight">
-                  <p:splitButton value="Add Class"  icon="fa fa-plus Fs16 White"
-                                 styleClass="GreenButton">
-                    <p:menuitem value="Add class wizard..."/>
-                  </p:splitButton>
                   <p:commandButton id="addButton" value="Add Class" icon="fa fa-plus Fs16 White"
                                    styleClass="GreenButton">
                     <p:ajax listener="#{groupClassesView.prepareNewGroupClass()}" oncomplete="PF('newClassDlg').show()"
@@ -44,7 +41,7 @@
                 <f:facet name="filter">
                   <p:selectOneMenu onchange="PF('classesTable').filter()">
                     <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
-                    <f:selectItems value="#{groupClassesView.genres}" var="genre" itemLabel="#{genre.value}" itemValue="#{genre.value}"/>
+                    <f:selectItems value="#{groupClassesView.categoryOptions('CLASS_GENRE')}" var="genre" itemLabel="#{genre.value}" itemValue="#{genre.value}"/>
                   </p:selectOneMenu>
                 </f:facet>
                 <h:outputText value="#{groupClass.genre.value}"/>
@@ -62,7 +59,7 @@
             </p:dataTable>
 
             <p:dialog id="newClassDlg" widgetVar="newClassDlg" modal="true" showEffect="slide" hideEffect="slide"
-                      width="600" header="Add Class" closable="true">
+                      width="700" header="Add Class" closable="true">
 
               <f:facet name="footer">
                 <div class="TexAlRight">
@@ -70,6 +67,58 @@
                   <p:commandButton value="Cancel" onclick="PF('newClassDlg').hide();"/>
                 </div>
               </f:facet>
+
+              <div class="Container100 TexAlLeft">
+                <div class="ContainerIndent">
+                  <div class="Container100">Class Title:</div>
+                  <div class="Container100">
+                    <p:inputText id="dlgTitle" value="#{groupClassesView.newGroupClass.title}" 
+                                 placeholder="Class title" styleClass="Wid90" title="Name of class"/>
+                  </div>
+
+                  <div class="EmptyBox20"></div>
+
+                  <div class="Container50">Genre</div>
+                  <div class="Container50">Level</div>
+                  
+                  <div class="Container50">
+                    <p:selectOneMenu id="dlgGenre" value="#{groupClassesView.newGroupClass.genre}" title="Class genre"
+                                     styleClass="Wid90">
+                      <f:selectItem itemLabel="Genre..." value="#{null}"/>
+                      <f:selectItems value="#{groupClassesView.categoryOptions('CLASS_GENRE')}" var="genre"
+                                     itemLabel="#{genre.value}" itemValue="#{genre}"/>
+                    </p:selectOneMenu>
+                  </div>
+                  
+                  <div class="Container50">
+                    <p:selectOneMenu id="dlgLevel" value="#{groupClassesView.newGroupClass.classLevel}" title="Class level"
+                                     styleClass="Wid90">
+                      <f:selectItem itemLabel="Level..." value="#{null}"/>
+                      <f:selectItems value="#{groupClassesView.categoryOptions('CLASS_LEVEL')}" var="genre"
+                                     itemLabel="#{genre.value}" itemValue="#{genre}"/>
+                    </p:selectOneMenu>
+                  </div>
+
+                  <div class="EmptyBox20"></div>
+
+                  <div class="Container33">Min. Age</div>
+                  <div class="Container33">Max. Age</div>
+                  <div class="Container33">Max. in Class</div>
+                  
+                  <div class="Container33">
+                    <p:spinner id="dlgMinAge" placeholder="Min. Age" title="Min. Age"/>                  
+                  </div>                  
+                  
+                  <div class="Container33">
+                    <p:spinner id="dlgMaxAge" placeholder="Max. Age" title="Max. Age"/>
+                  </div>                  
+                  
+                  <div class="Container33">
+                    <p:spinner id="dlgMaxInClass" placeholder="Max in Class" title="Max. in Class"/>
+                  </div>
+
+                </div>
+              </div>
             </p:dialog>
 
           </h:form>
