@@ -14,7 +14,7 @@ import lombok.Setter;
 public abstract class AbstractEntity implements Serializable {
 
     @Id
-    @Column(length = 36)
+    @Column(length = 36, unique = true)
     private String uid;
 
     @Version

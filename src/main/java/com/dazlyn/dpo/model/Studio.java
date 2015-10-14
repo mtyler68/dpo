@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -31,11 +30,7 @@ import lombok.experimental.Builder;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString(exclude = {"families"})
-public class Studio implements Serializable {
-
-    @Id
-    @Column(length = 36, unique = true)
-    private String uid;
+public class Studio extends AbstractEntity implements Serializable {
 
     private String name;
 

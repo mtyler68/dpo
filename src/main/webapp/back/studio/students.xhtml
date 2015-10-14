@@ -12,7 +12,6 @@
   <ui:define name="content">
     <ui:decorate template="/WEB-INF/templates/pagecontainer.xhtml">
       <ui:define name="content">
-        <br/>        
         <h:form>
           <p:tooltip/>
           <p:growl id="growl" showDetail="true"/>
@@ -22,7 +21,8 @@
                        paginator="true"
                        rowsPerPageTemplate="10,25,50,100"
                        emptyMessage="No students found"
-                       filteredValue="#{studentsController.filteredStudents}">
+                       filteredValue="#{studentsController.filteredStudents}"
+                       style="margin:-20px; border:none 0px;">
             <f:facet name="header">
               <p:outputPanel class="TexAlRight">
                 <h:outputText value="Search "/>
@@ -48,7 +48,6 @@
             </p:column>
           </p:dataTable>
         </h:form>
-        <br/><br/>
       </ui:define>
 
     </ui:decorate>

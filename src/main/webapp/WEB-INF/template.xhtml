@@ -21,7 +21,7 @@
         <ui:insert name="head" />
     </h:head>
 
-    <h:body class="GrayModena Geometry">
+    <h:body class="IndigoModena">
         
         <ui:include src="topbar.xhtml" />
         
@@ -45,7 +45,7 @@
 
                         <div class="Container100 UserLinks">
                             <div class="ContainerIndent">
-                                <span class="BoldGray Fs18 FontRobotoLight Fleft ShowOnDesktop"><i class="icon-arrow-right"></i> <ui:insert name="subheader" /></span>
+                              <span class="BoldGray Fs18 FontRobotoLight Fleft ShowOnDesktop"><ui:insert name="breadcrumb"><i class="icon-arrow-right"></i> <ui:insert name="subheader" /></ui:insert></span>
 
                                 <a href="#" class="BoldGray Fs16 FontRobotoLight Fright HoverEffect"><i class="icon-paper"></i> Notes</a>
                                 <a href="#" class="BoldGray Fs16 FontRobotoLight Fright MarRight20 HoverEffect"><i class="icon-briefcase"></i> Tasks</a>

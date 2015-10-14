@@ -3,6 +3,7 @@ package com.dazlyn.dpo.view;
 import com.dazlyn.dpo.model.Category;
 import com.dazlyn.dpo.model.CategoryManager;
 import com.dazlyn.dpo.model.CategoryOption;
+import com.dazlyn.dpo.model.ClassRoom;
 import com.dazlyn.dpo.model.GroupClass;
 import com.dazlyn.dpo.model.GroupClassManager;
 import java.io.Serializable;
@@ -33,6 +34,13 @@ public class GroupClassesView extends AbstractStudioView implements Serializable
     @Setter
     private GroupClass newGroupClass;
 
+    @Getter
+    private String classRoomString;
+
+    @Getter
+    @Setter
+    private ClassRoom classRoom;
+
     @Inject
     private GroupClassManager groupClassManager;
 
@@ -59,5 +67,9 @@ public class GroupClassesView extends AbstractStudioView implements Serializable
 
     public List<CategoryOption> categoryOptions(String category) {
         return categoryManager.findForCategory(getStudio(), Category.valueOf(category));
+    }
+
+    public void setClassRoom(String value) {
+        this.classRoomString = value;
     }
 }

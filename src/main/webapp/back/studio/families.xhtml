@@ -12,25 +12,24 @@
   <ui:define name="content">
     <ui:decorate template="/WEB-INF/templates/pagecontainer.xhtml">
       <ui:define name="content">
-        <br/>
         <h:form id="form">
           <p:growl id="growl" showDetail="true"/>
-
-          <div class="TexAlRight">
-            <p:commandButton value="Add Family" icon="fa fa-plus Fs16 White" onclick="PF('addStudioDlg').show();"/>
-          </div>
-          <br/>
 
           <p:dataTable id="families" var="_family" value="#{familiesController.families}" rows="10" widgetVar="familiesTable"
                        paginator="true"
                        rowsPerPageTemplate="10,25,50,100"
                        emptyMessage="No families found"
-                       filteredValue="#{familiesController.filteredFamilies}">
+                       filteredValue="#{familiesController.filteredFamilies}"
+                       style="margin:-20px; border:none 0px;">
+
             <f:facet name="header">
               <p:outputPanel class="TexAlRight">
-                <h:outputText value="Search "/>
-                <p:inputText id="globalFilter" style="width:150px" placeholder="Enter keyword"
+                <i class="icon-search2"></i>
+                <p:inputText id="globalFilter" style="width:150px" placeholder="Search"
                              onkeyup="PF('familiesTable').filter()"/>
+                <span> </span>
+                <p:commandButton value="Add Family" icon="fa fa-plus Fs16 White" onclick="PF('addStudioDlg').show();"
+                                 styleClass="GreenButton"/>
               </p:outputPanel>
             </f:facet>
 

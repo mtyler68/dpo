@@ -51,4 +51,8 @@ public class GroupClass extends AbstractArchivableStudioEntity implements Serial
             inverseJoinColumns = @JoinColumn(name = "person_uid")
     )
     private List<Person> students;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "class_room_uid")
+    private ClassRoom classRoom;
 }

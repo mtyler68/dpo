@@ -5,8 +5,13 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
 
-  <ui:define name="subheader">
-    Classes
+  <ui:define name="breadcrumb">
+    <h:form>
+      <p:breadCrumb homeDisplay="text">
+        <p:menuitem value="Dashboard" outcome="pretty:dashboard"/>
+        <p:menuitem value="Classes" disabled="true"/>
+      </p:breadCrumb>
+    </h:form>
   </ui:define>
 
   <ui:define name="content">
@@ -78,13 +83,13 @@
 
                   <div class="EmptyBox20"></div>
 
-                  <div class="Container50">Genre</div>
-                  <div class="Container50">Level</div>
+                  <div class="Container50">Genre:</div>
+                  <div class="Container50">Level:</div>
                   
                   <div class="Container50">
                     <p:selectOneMenu id="dlgGenre" value="#{groupClassesView.newGroupClass.genre}" title="Class genre"
                                      styleClass="Wid90">
-                      <f:selectItem itemLabel="Genre..." value="#{null}"/>
+                      <f:selectItem itemLabel="Select a Genre" value="#{null}"/>
                       <f:selectItems value="#{groupClassesView.categoryOptions('CLASS_GENRE')}" var="genre"
                                      itemLabel="#{genre.value}" itemValue="#{genre}"/>
                     </p:selectOneMenu>
@@ -93,7 +98,7 @@
                   <div class="Container50">
                     <p:selectOneMenu id="dlgLevel" value="#{groupClassesView.newGroupClass.classLevel}" title="Class level"
                                      styleClass="Wid90">
-                      <f:selectItem itemLabel="Level..." value="#{null}"/>
+                      <f:selectItem itemLabel="Select a Level" value="#{null}"/>
                       <f:selectItems value="#{groupClassesView.categoryOptions('CLASS_LEVEL')}" var="genre"
                                      itemLabel="#{genre.value}" itemValue="#{genre}"/>
                     </p:selectOneMenu>
@@ -101,9 +106,9 @@
 
                   <div class="EmptyBox20"></div>
 
-                  <div class="Container33">Min. Age</div>
-                  <div class="Container33">Max. Age</div>
-                  <div class="Container33">Max. in Class</div>
+                  <div class="Container33">Min. Age:</div>
+                  <div class="Container33">Max. Age:</div>
+                  <div class="Container33">Max. in Class:</div>
                   
                   <div class="Container33">
                     <p:spinner id="dlgMinAge" placeholder="Min. Age" title="Min. Age"/>                  
@@ -115,6 +120,19 @@
                   
                   <div class="Container33">
                     <p:spinner id="dlgMaxInClass" placeholder="Max in Class" title="Max. in Class"/>
+                  </div>
+                  
+                  <div class="EmptyBox20"></div>
+                  
+                  <div class="Container100">
+                    Class Room:
+                  </div>
+                  <div class="Container100">
+                    <p:selectOneMenu id="dlgClassRoom" editable="true">
+                      <f:selectItem itemLabel="Select Class Room" itemValue="#{null}"/>
+                      
+                      <f:selectItem itemLabel="Add class room..." itemValue="-1"/>
+                    </p:selectOneMenu>
                   </div>
 
                 </div>
