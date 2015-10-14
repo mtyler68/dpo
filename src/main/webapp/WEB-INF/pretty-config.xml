@@ -67,9 +67,9 @@
     <view-id value="/back/studio/schedule.xhtml"/>
   </url-mapping>
   
-  <url-mapping id="classRooms">
-    <pattern value="/back/settings/classRooms"/>
-    <view-id value="/back/settings/class-rooms.xhtml"/>
+  <url-mapping id="classrooms">
+    <pattern value="/back/settings/classrooms"/>
+    <view-id value="/back/settings/classrooms.xhtml"/>
   </url-mapping>
     
 </pretty-config>

@@ -5,8 +5,12 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
 
-  <ui:define name="subheader">
-    Dashboard
+  <ui:define name="breadcrumb">
+    <h:form>
+      <p:breadCrumb homeDisplay="text">
+        <p:menuitem value="Dashboard" disabled="true"/>
+      </p:breadCrumb>
+    </h:form>
   </ui:define>
 
   <ui:define name="content">

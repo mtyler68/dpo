@@ -1,7 +1,7 @@
 package com.dazlyn.dpo.view;
 
-import com.dazlyn.dpo.model.ClassRoom;
-import com.dazlyn.dpo.model.ClassRoomManager;
+import com.dazlyn.dpo.model.Classroom;
+import com.dazlyn.dpo.model.ClassroomManager;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -15,34 +15,34 @@ import lombok.Setter;
 
 @Named
 @ViewScoped
-public class ClassRoomsView extends AbstractStudioView implements Serializable {
+public class ClassroomsView extends AbstractStudioView implements Serializable {
 
     @Inject
-    private ClassRoomManager roomManager;
+    private ClassroomManager roomManager;
 
     @Getter
     @Setter
-    private ClassRoom selectedRoom;
+    private Classroom selectedRoom;
 
     @Getter
-    private List<ClassRoom> rooms;
+    private List<Classroom> rooms;
 
     @PostConstruct
     public void init() {
         loadRooms();
-        prepareNewClassRoom();
+        prepareNewClassroom();
     }
 
     private void loadRooms() {
         rooms = roomManager.findAll(getStudio());
     }
 
-    public void prepareNewClassRoom() {
-        selectedRoom = new ClassRoom();
+    public void prepareNewClassroom() {
+        selectedRoom = new Classroom();
     }
 
     @Transactional
-    public void saveClassRoom() {
+    public void saveClassroom() {
         if (selectedRoom.getUid() == null) {
             selectedRoom.setStudio(getStudio());
             roomManager.persist(selectedRoom);
@@ -53,7 +53,7 @@ public class ClassRoomsView extends AbstractStudioView implements Serializable {
     }
 
     @Transactional
-    public void archiveSelectedClassRoom() {
+    public void archiveSelectedClassroom() {
         selectedRoom.setArchived(true);
         selectedRoom.setArchivedDate(new Date());
         roomManager.merge(selectedRoom);

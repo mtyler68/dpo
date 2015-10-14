@@ -53,6 +53,6 @@ public class GroupClass extends AbstractArchivableStudioEntity implements Serial
     private List<Person> students;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "class_room_uid")
-    private ClassRoom classRoom;
+    @JoinColumn(name = "classroom_uid")
+    private Classroom classroom;
 }

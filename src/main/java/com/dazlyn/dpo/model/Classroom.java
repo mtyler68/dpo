@@ -7,9 +7,9 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "class_room")
+@Table(name = "classroom")
 @Data
-public class ClassRoom extends AbstractArchivableStudioEntity implements Serializable {
+public class Classroom extends AbstractArchivableStudioEntity implements Serializable {
 
     @Column(length = 100)
     private String name;
