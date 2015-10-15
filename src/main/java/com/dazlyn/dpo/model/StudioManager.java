@@ -31,16 +31,16 @@ public class StudioManager {
     private EntityManager em;
 
     private static final Object[][] CATEGORIES = {
-        {Category.BILLING_SCHEDULE, "Monthly", "Quarterly", "Yearly", "Drop In Class", "Weekly"},
-        {Category.CHARGE_CATEGORY, "2015-10 October", "2015-11 November", "2015-12 December",
+        {CategoryType.BILLING_SCHEDULE, "Monthly", "Quarterly", "Yearly", "Drop In Class", "Weekly"},
+        {CategoryType.CHARGE_CATEGORY, "2015-10 October", "2015-11 November", "2015-12 December",
             "2016 Spring Recital Fee", "Workshop Fee", "Registration Fee"},
-        {Category.CLASS_GENRE, "Ballet", "Contemporary", "Hip Hop", "Jazz", "Pointe", "Tap", "Combo"},
-        {Category.CLASS_LEVEL, "Toddler", "Pre-school", "Kindergarten", "Beginner", "Intermediate", "Advanced"},
-        {Category.CLASS_LOCATION, "Coronado", "Downtown"},
-        {Category.CLASS_PROGRAM, "Recital", "Competition"},
-        {Category.PAYMENT_CYCLE, "Billing Schedule", "Drop-in"},
-        {Category.PAYMENT_METHOD, "Credit Card", "Cash", "Check", "Gift Certificate", "Other", "PayPal", "Scholarship"},
-        {Category.PAYMENT_SCHEDULE, "Monthly Payments", "Quarterly Payments", "Yearly Payments"}
+        {CategoryType.CLASS_GENRE, "Ballet", "Contemporary", "Hip Hop", "Jazz", "Pointe", "Tap", "Combo"},
+        {CategoryType.CLASS_LEVEL, "Toddler", "Pre-school", "Kindergarten", "Beginner", "Intermediate", "Advanced"},
+        {CategoryType.CLASS_LOCATION, "Coronado", "Downtown"},
+        {CategoryType.CLASS_PROGRAM, "Recital", "Competition"},
+        {CategoryType.PAYMENT_CYCLE, "Billing Schedule", "Drop-in"},
+        {CategoryType.PAYMENT_METHOD, "Credit Card", "Cash", "Check", "Gift Certificate", "Other", "PayPal", "Scholarship"},
+        {CategoryType.PAYMENT_SCHEDULE, "Monthly Payments", "Quarterly Payments", "Yearly Payments"}
     };
 
     @Transactional
@@ -74,9 +74,9 @@ public class StudioManager {
 
     private void addCategories(Studio studio) {
         for (Object[] options : CATEGORIES) {
-            Category category = (Category) options[0];
+            CategoryType category = (CategoryType) options[0];
             for (int optionIndex = 1; optionIndex < options.length; optionIndex++) {
-                CategoryOption option = CategoryOption.builder()
+                CategoryOptionEntity option = CategoryOptionEntity.builder()
                         .category(category)
                         .sortOrder(optionIndex)
                         .studio(studio)

@@ -5,7 +5,7 @@ import javax.inject.Named;
 
 @Named
 @ApplicationScoped
-public class ClassroomManager extends AbstractEntityManager<String, Classroom> {
+public class ClassroomManager extends AbstractStudioEntityManager<String, Classroom> {
 
     public ClassroomManager() {
         super(String.class, Classroom.class);

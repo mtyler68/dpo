@@ -3,7 +3,6 @@ package com.dazlyn.dpo.view;
 import com.dazlyn.dpo.model.Classroom;
 import com.dazlyn.dpo.model.ClassroomManager;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -43,7 +42,7 @@ public class ClassroomsView extends AbstractStudioView implements Serializable {
 
     @Transactional
     public void saveClassroom() {
-        if (selectedRoom.getUid() == null) {
+        if (selectedRoom.getVersion() == null) {
             selectedRoom.setStudio(getStudio());
             roomManager.persist(selectedRoom);
             loadRooms();
@@ -54,9 +53,7 @@ public class ClassroomsView extends AbstractStudioView implements Serializable {
 
     @Transactional
     public void archiveSelectedClassroom() {
-        selectedRoom.setArchived(true);
-        selectedRoom.setArchivedDate(new Date());
-        roomManager.merge(selectedRoom);
+        roomManager.archive(selectedRoom);
         rooms.remove(selectedRoom);
     }
 }

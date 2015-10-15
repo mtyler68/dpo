@@ -25,7 +25,7 @@ import lombok.experimental.Builder;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class ScheduleEvent extends AbstractArchivableStudioEntity implements Serializable {
+public class ScheduleEvent extends AbstractStudioEntity implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "event_type", length = 30, nullable = false)

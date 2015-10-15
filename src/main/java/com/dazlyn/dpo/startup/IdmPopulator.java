@@ -1,8 +1,8 @@
 package com.dazlyn.dpo.startup;
 
-import com.dazlyn.dpo.model.Category;
-import com.dazlyn.dpo.model.CategoryManager;
-import com.dazlyn.dpo.model.CategoryOption;
+import com.dazlyn.dpo.model.CategoryType;
+import com.dazlyn.dpo.dao.CategoryRepository;
+import com.dazlyn.dpo.model.CategoryOptionEntity;
 import com.dazlyn.dpo.model.Family;
 import com.dazlyn.dpo.model.FamilyManager;
 import com.dazlyn.dpo.model.GroupClass;
@@ -68,7 +68,7 @@ public class IdmPopulator {
     private FamilyManager familyManager;
 
     @Inject
-    private CategoryManager categoryManager;
+    private CategoryRepository categoryManager;
 
     @Inject
     private StudioSettingsManager studioSettingsManager;
@@ -228,10 +228,10 @@ public class IdmPopulator {
     private void addClasses(Studio cadStudio, Person... instructors) {
         int insIndex = 0;
         for (ClassDef classDef : GROUP_CLASSES) {
-            CategoryOption genreOption = classDef.getGenre() == null ? null
-                    : categoryManager.findForOption(cadStudio, Category.CLASS_GENRE, classDef.getGenre());
-            CategoryOption levelOption = classDef.getLevel() == null ? null
-                    : categoryManager.findForOption(cadStudio, Category.CLASS_LEVEL, classDef.getLevel());
+            CategoryOptionEntity genreOption = classDef.getGenre() == null ? null
+                    : categoryManager.findForOption(cadStudio, CategoryType.CLASS_GENRE, classDef.getGenre());
+            CategoryOptionEntity levelOption = classDef.getLevel() == null ? null
+                    : categoryManager.findForOption(cadStudio, CategoryType.CLASS_LEVEL, classDef.getLevel());
             GroupClass gc = GroupClass.builder()
                     .genre(genreOption)
                     .classLevel(levelOption)

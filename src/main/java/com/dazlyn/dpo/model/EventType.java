@@ -6,5 +6,6 @@ public enum EventType {
     PRIVATE_LESSON,
     GLOBAL_EVENT,
     PERSONAL_EVENT,
-    TASK
+    TASK,
+    EXCLUDE_DATE
 }

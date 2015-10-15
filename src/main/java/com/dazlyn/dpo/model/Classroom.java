@@ -9,7 +9,7 @@ import lombok.Data;
 @Entity
 @Table(name = "classroom")
 @Data
-public class Classroom extends AbstractArchivableStudioEntity implements Serializable {
+public class Classroom extends AbstractStudioEntity implements Serializable {
 
     @Column(length = 100)
     private String name;

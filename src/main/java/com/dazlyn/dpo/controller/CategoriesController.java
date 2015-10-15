@@ -1,8 +1,8 @@
 package com.dazlyn.dpo.controller;
 
-import com.dazlyn.dpo.model.Category;
-import com.dazlyn.dpo.model.CategoryManager;
-import com.dazlyn.dpo.model.CategoryOption;
+import com.dazlyn.dpo.model.CategoryType;
+import com.dazlyn.dpo.dao.CategoryRepository;
+import com.dazlyn.dpo.model.CategoryOptionEntity;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.view.ViewScoped;
@@ -22,25 +22,25 @@ import org.primefaces.event.UnselectEvent;
 public class CategoriesController extends AbstractSecureController implements Serializable {
 
     @Inject
-    private CategoryManager categoryManager;
+    private CategoryRepository categoryManager;
 
     @Getter
     @Setter
-    private Category selectedCategory;
+    private CategoryType selectedCategory;
 
     @Getter
-    private List<CategoryOption> options;
+    private List<CategoryOptionEntity> options;
 
     @Getter
     @Setter
-    private CategoryOption selectedOption;
+    private CategoryOptionEntity selectedOption;
 
     @Getter
     @Setter
     private String optionValue;
 
-    public Category[] getCategoryList() {
-        return Category.values();
+    public CategoryType[] getCategoryList() {
+        return CategoryType.values();
     }
 
     public void onCategoryChange() {
@@ -60,7 +60,7 @@ public class CategoriesController extends AbstractSecureController implements Se
 
     @Transactional
     public void deleteSelectedOption() {
-        CategoryOption option = categoryManager.find(selectedOption.getUid());
+        CategoryOptionEntity option = categoryManager.find(selectedOption.getUid());
         categoryManager.remove(option);
         options.remove(selectedOption);
         selectedOption = null;
@@ -84,7 +84,7 @@ public class CategoriesController extends AbstractSecureController implements Se
 
     private void updateSortOrders() {
         int index = 1;
-        for (CategoryOption option : options) {
+        for (CategoryOptionEntity option : options) {
             option.setSortOrder(index++);
             categoryManager.merge(option);
         }
@@ -92,7 +92,7 @@ public class CategoriesController extends AbstractSecureController implements Se
 
     @Transactional
     public void save() {
-        CategoryOption option = categoryManager.find(selectedOption.getUid());
+        CategoryOptionEntity option = categoryManager.find(selectedOption.getUid());
         option.setValue(optionValue);
         categoryManager.merge(option);
     }

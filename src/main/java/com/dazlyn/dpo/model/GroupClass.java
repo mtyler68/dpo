@@ -28,17 +28,17 @@ import lombok.experimental.Builder;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class GroupClass extends AbstractArchivableStudioEntity implements Serializable {
+public class GroupClass extends AbstractStudioEntity implements Serializable {
 
     private String title;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "genre_uid")
-    private CategoryOption genre;
+    private CategoryOptionEntity genre;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "class_level_uid")
-    private CategoryOption classLevel;
+    private CategoryOptionEntity classLevel;
 
     @ManyToMany(
             targetEntity = Person.class,

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum Category {
+public enum CategoryType {
 
     BILLING_SCHEDULE("Billing Schedule"),
     CHARGE_CATEGORY("Charge Category"),

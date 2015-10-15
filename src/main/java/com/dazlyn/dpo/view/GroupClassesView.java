@@ -1,8 +1,8 @@
 package com.dazlyn.dpo.view;
 
-import com.dazlyn.dpo.model.Category;
-import com.dazlyn.dpo.model.CategoryManager;
-import com.dazlyn.dpo.model.CategoryOption;
+import com.dazlyn.dpo.model.CategoryType;
+import com.dazlyn.dpo.dao.CategoryRepository;
+import com.dazlyn.dpo.model.CategoryOptionEntity;
 import com.dazlyn.dpo.model.Classroom;
 import com.dazlyn.dpo.model.GroupClass;
 import com.dazlyn.dpo.model.GroupClassManager;
@@ -45,7 +45,7 @@ public class GroupClassesView extends AbstractStudioView implements Serializable
     private GroupClassManager groupClassManager;
 
     @Inject
-    private CategoryManager categoryManager;
+    private CategoryRepository categoryManager;
 
     @PostConstruct
     public void init() {
@@ -65,8 +65,8 @@ public class GroupClassesView extends AbstractStudioView implements Serializable
         newGroupClass = new GroupClass();
     }
 
-    public List<CategoryOption> categoryOptions(String category) {
-        return categoryManager.findForCategory(getStudio(), Category.valueOf(category));
+    public List<CategoryOptionEntity> categoryOptions(String category) {
+        return categoryManager.findForCategory(getStudio(), CategoryType.valueOf(category));
     }
 
     public void setClassRoom(String value) {

@@ -34,25 +34,8 @@ public class AbstractEntityManager<K, E> {
     }
 
     public List<E> findAll() {
-        return findAll(false);
-    }
-
-    public List<E> findAll(boolean isArchived) {
         return getEntityManager().createQuery(
-                "SELECT x FROM " + getEntityClass().getSimpleName() + " x WHERE x.archived = :isArchived", getEntityClass())
-                .setParameter("isArchived", isArchived)
-                .getResultList();
-    }
-
-    public List<E> findAll(Studio studio) {
-        return findAll(studio, false);
-    }
-
-    public List<E> findAll(Studio studio, boolean isArchived) {
-        return getEntityManager().createQuery(
-                "SELECT x FROM " + getEntityClass().getSimpleName() + " x WHERE x.studio = :studio AND x.archived = :isArchived", getEntityClass())
-                .setParameter("studio", studio)
-                .setParameter("isArchived", isArchived)
+                "SELECT x FROM " + getEntityClass().getSimpleName() + " x WHERE", getEntityClass())
                 .getResultList();
     }
 
@@ -61,7 +44,7 @@ public class AbstractEntityManager<K, E> {
     }
 
     public void persist(E entity) {
-        if (entity instanceof AbstractEntity && ((AbstractEntity) entity).getUid() == null) {
+        if (entity instanceof AbstractEntity && ((AbstractEntity) entity).getVersion() == null) {
             ((AbstractEntity) entity).setUid(UUID.randomUUID().toString());
         }
         getEntityManager().persist(entity);
