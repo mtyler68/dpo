@@ -1,7 +1,8 @@
 package com.dazlyn.dpo.controller;
 
-import com.dazlyn.dpo.model.Studio;
-import com.dazlyn.dpo.model.StudioManager;
+import com.dazlyn.dpo.dao.CategoryRepository;
+import com.dazlyn.dpo.model.StudioEntity;
+import com.dazlyn.dpo.dao.StudioRepository;
 import com.dazlyn.dpo.security.RealmManager;
 import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
@@ -24,10 +25,14 @@ public class StudiosController {
     private String studioName;
 
     @Inject
+    private CategoryRepository categoryRepo;
+    
+    @Inject
     private RealmManager realmManager;
 
     @Inject
-    private StudioManager studioManager;
+    private StudioRepository studioManager;
+    
 
     @Inject
     private FacesContext facesContext;
@@ -37,12 +42,13 @@ public class StudiosController {
 
         // TODO: Needs validation
         Realm realm = realmManager.createRealm(code);
-        Studio studio = Studio.builder()
+        StudioEntity studio = StudioEntity.builder()
                 .code(code)
                 .name(studioName)
                 .realmId(realm.getId())
                 .build();
-        studioManager.add(studio);
+        studioManager.persist(studio);
+        categoryRepo.addDefaultCategories(studio);
 
         code = "";
         studioName = "";

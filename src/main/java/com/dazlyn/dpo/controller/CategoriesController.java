@@ -2,7 +2,7 @@ package com.dazlyn.dpo.controller;
 
 import com.dazlyn.dpo.model.CategoryType;
 import com.dazlyn.dpo.dao.CategoryRepository;
-import com.dazlyn.dpo.model.CategoryOptionEntity;
+import com.dazlyn.dpo.model.CategoryEntity;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.view.ViewScoped;
@@ -29,11 +29,11 @@ public class CategoriesController extends AbstractSecureController implements Se
     private CategoryType selectedCategory;
 
     @Getter
-    private List<CategoryOptionEntity> options;
+    private List<CategoryEntity> options;
 
     @Getter
     @Setter
-    private CategoryOptionEntity selectedOption;
+    private CategoryEntity selectedOption;
 
     @Getter
     @Setter
@@ -45,7 +45,7 @@ public class CategoriesController extends AbstractSecureController implements Se
 
     public void onCategoryChange() {
         selectedOption = null;
-        options = categoryManager.findForCategory(super.geStudio(), selectedCategory);
+        options = categoryManager.findAllForType(super.geStudio(), selectedCategory);
     }
 
     public void onOptionSelected(SelectEvent evt) {
@@ -60,7 +60,7 @@ public class CategoriesController extends AbstractSecureController implements Se
 
     @Transactional
     public void deleteSelectedOption() {
-        CategoryOptionEntity option = categoryManager.find(selectedOption.getUid());
+        CategoryEntity option = categoryManager.find(selectedOption.getUid());
         categoryManager.remove(option);
         options.remove(selectedOption);
         selectedOption = null;
@@ -84,7 +84,7 @@ public class CategoriesController extends AbstractSecureController implements Se
 
     private void updateSortOrders() {
         int index = 1;
-        for (CategoryOptionEntity option : options) {
+        for (CategoryEntity option : options) {
             option.setSortOrder(index++);
             categoryManager.merge(option);
         }
@@ -92,7 +92,7 @@ public class CategoriesController extends AbstractSecureController implements Se
 
     @Transactional
     public void save() {
-        CategoryOptionEntity option = categoryManager.find(selectedOption.getUid());
+        CategoryEntity option = categoryManager.find(selectedOption.getUid());
         option.setValue(optionValue);
         categoryManager.merge(option);
     }

@@ -1,7 +1,7 @@
 package com.dazlyn.dpo.data;
 
-import com.dazlyn.dpo.model.Studio;
-import com.dazlyn.dpo.model.StudioManager;
+import com.dazlyn.dpo.model.StudioEntity;
+import com.dazlyn.dpo.dao.StudioRepository;
 import com.dazlyn.dpo.model.StudioSettings;
 import com.dazlyn.dpo.model.StudioSettingsManager;
 import javax.enterprise.context.RequestScoped;
@@ -19,7 +19,7 @@ public class StudioProducer {
     private Identity identity;
 
     @Inject
-    private StudioManager studioManager;
+    private StudioRepository studioManager;
 
     @Inject
     private StudioSettingsManager studioSettingsManager;
@@ -28,7 +28,7 @@ public class StudioProducer {
 
     @Named("studio")
     @Produces
-    public Studio retrieve() {
+    public StudioEntity retrieve() {
         log.info("action=retrieve");
         String id = identity.getAccount().getPartition().getId();
         return studioManager.findByRealmId(id);

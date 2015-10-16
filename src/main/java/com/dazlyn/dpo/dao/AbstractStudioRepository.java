@@ -1,11 +1,13 @@
-package com.dazlyn.dpo.model;
+package com.dazlyn.dpo.dao;
 
+import com.dazlyn.dpo.model.AbstractStudioEntity;
+import com.dazlyn.dpo.model.StudioEntity;
 import java.util.Date;
 import java.util.List;
 
-public abstract class AbstractStudioEntityManager<K, E> extends AbstractEntityManager<K, E> {
+public abstract class AbstractStudioRepository<K, E> extends AbstractRepository<K, E> {
 
-    protected AbstractStudioEntityManager(Class<K> keyClass, Class<E> entityClass) {
+    protected AbstractStudioRepository(Class<K> keyClass, Class<E> entityClass) {
         super(keyClass, entityClass);
     }
 
@@ -21,11 +23,11 @@ public abstract class AbstractStudioEntityManager<K, E> extends AbstractEntityMa
                 .getResultList();
     }
 
-    public List<E> findAll(Studio studio) {
+    public List<E> findAll(StudioEntity studio) {
         return findAll(studio, false);
     }
 
-    public List<E> findAll(Studio studio, boolean isArchived) {
+    public List<E> findAll(StudioEntity studio, boolean isArchived) {
         return getEntityManager().createQuery(
                 "SELECT x FROM " + getEntityClass().getSimpleName() + " x WHERE x.studio = :studio AND x.archived = :isArchived", getEntityClass())
                 .setParameter("studio", studio)

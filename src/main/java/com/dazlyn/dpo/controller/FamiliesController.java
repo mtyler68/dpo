@@ -2,8 +2,8 @@ package com.dazlyn.dpo.controller;
 
 import com.dazlyn.dpo.model.Family;
 import com.dazlyn.dpo.model.FamilyManager;
-import com.dazlyn.dpo.model.Studio;
-import com.dazlyn.dpo.model.StudioManager;
+import com.dazlyn.dpo.model.StudioEntity;
+import com.dazlyn.dpo.dao.StudioRepository;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -25,7 +25,7 @@ public class FamiliesController implements Serializable {
     private Identity identity;
 
     @Inject
-    private volatile StudioManager studioManager;
+    private volatile StudioRepository studioManager;
 
     @Inject
     private FamilyManager familyManager;
@@ -44,7 +44,7 @@ public class FamiliesController implements Serializable {
     @PostConstruct
     public void init() {
         String id = identity.getAccount().getPartition().getId();
-        Studio studio = studioManager.findByRealmIdWithFamilies(id);
+        StudioEntity studio = studioManager.findByRealmIdWithFamilies(id);
         families = studio.getFamilies();
     }
 

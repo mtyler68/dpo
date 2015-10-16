@@ -16,19 +16,26 @@ import lombok.Setter;
 import lombok.experimental.Builder;
 
 @Entity
-@Table(name = "category_option")
+@Table(name = "category")
 @NamedQueries({
-    @NamedQuery(name = "CategoryOption.findForCategory",
-            query = "SELECT co FROM CategoryOption co WHERE co.studio = :studio AND co.category = :category AND co.archived = :archived ORDER BY co.sortOrder ASC"),
-    @NamedQuery(name = "CategoryOption.findForOption",
-            query = "SELECT co FROM CategoryOption co WHERE co.studio = :studio AND co.category = :category AND co.value = :value")
+    @NamedQuery(name = "CategoryEntity.findAllForType",
+            query = "SELECT c FROM CategoryEntity c "
+                    + "WHERE c.studio = :studio "
+                    + "AND c.type = :category "
+                    + "AND c.archived = :archived "
+                    + "ORDER BY c.sortOrder ASC"),
+    @NamedQuery(name = "CategoryEntity.findForValue",
+            query = "SELECT c FROM CategoryEntity c "
+                    + "WHERE c.studio = :studio "
+                    + "AND c.type = :category "
+                    + "AND c.value = :value")
 })
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Setter
-public class CategoryOptionEntity extends AbstractStudioEntity implements Serializable {
+public class CategoryEntity extends AbstractStudioEntity implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 30)

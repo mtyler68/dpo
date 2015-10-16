@@ -50,7 +50,7 @@ public class Person implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "studio_uid")
-    private Studio studio;
+    private StudioEntity studio;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "family_uid", insertable = false, updatable = false)
@@ -72,10 +72,10 @@ public class Person implements Serializable {
     private boolean typeEmployee;
 
     @ManyToMany(
-            targetEntity = GroupClass.class,
+            targetEntity = Course.class,
             mappedBy = "students",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             fetch = FetchType.LAZY
     )
-    private List<GroupClass> groupClasses;
+    private List<Course> groupClasses;
 }

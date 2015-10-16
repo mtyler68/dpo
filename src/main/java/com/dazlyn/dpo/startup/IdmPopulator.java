@@ -2,15 +2,15 @@ package com.dazlyn.dpo.startup;
 
 import com.dazlyn.dpo.model.CategoryType;
 import com.dazlyn.dpo.dao.CategoryRepository;
-import com.dazlyn.dpo.model.CategoryOptionEntity;
+import com.dazlyn.dpo.model.CategoryEntity;
 import com.dazlyn.dpo.model.Family;
 import com.dazlyn.dpo.model.FamilyManager;
-import com.dazlyn.dpo.model.GroupClass;
-import com.dazlyn.dpo.model.GroupClassManager;
+import com.dazlyn.dpo.model.Course;
+import com.dazlyn.dpo.dao.CourseRepository;
 import com.dazlyn.dpo.model.Person;
 import com.dazlyn.dpo.model.PersonManager;
-import com.dazlyn.dpo.model.Studio;
-import com.dazlyn.dpo.model.StudioManager;
+import com.dazlyn.dpo.model.StudioEntity;
+import com.dazlyn.dpo.dao.StudioRepository;
 import com.dazlyn.dpo.model.StudioSettings;
 import com.dazlyn.dpo.model.StudioSettingsManager;
 import com.dazlyn.dpo.security.RealmManager;
@@ -47,13 +47,13 @@ public class IdmPopulator {
     };
 
     @Inject
-    private StudioManager studioManager;
+    private StudioRepository studioManager;
 
     @Inject
     private PersonManager personManager;
 
     @Inject
-    private GroupClassManager groupClassManager;
+    private CourseRepository groupClassManager;
 
     @Inject
     private PartitionManager partitionManager;
@@ -85,14 +85,14 @@ public class IdmPopulator {
 
             // Dazlyn
             Realm dazlynRealm = realmManager.createRealm("dazlyn");
-            Studio dazlynStudio = createStudio(dazlynRealm, "Dazlyn");
+            StudioEntity dazlynStudio = createStudio(dazlynRealm, "Dazlyn");
 
             Person adamPerson = createPerson(dazlynRealm, dazlynStudio, "adam", "adam",
                     "adam@dazlyn.com", "Adam", "Admin", true, false, false, RealmRole.ADMIN);
 
             // Coronado Dance
             Realm cadRealm = realmManager.createRealm("coronadodance");
-            Studio cadStudio = createStudio(cadRealm, "Coronado Academy of Dance");
+            StudioEntity cadStudio = createStudio(cadRealm, "Coronado Academy of Dance");
 
             StudioSettings cadSettings = new StudioSettings();
             cadSettings.setStudio(cadStudio);
@@ -105,7 +105,7 @@ public class IdmPopulator {
 
             // Epic Dance
             Realm epicRealm = realmManager.createRealm("epicdance");
-            Studio epicStudio = createStudio(epicRealm, "Epic Dance");
+            StudioEntity epicStudio = createStudio(epicRealm, "Epic Dance");
             addClasses(epicStudio, indiaPerson);
 
             try {
@@ -119,17 +119,18 @@ public class IdmPopulator {
         }
     }
 
-    private Studio createStudio(Realm realm, String name) {
-        Studio studio = Studio.builder()
+    private StudioEntity createStudio(Realm realm, String name) {
+        StudioEntity studio = StudioEntity.builder()
                 .code(realm.getName())
                 .name(name)
                 .realmId(realm.getId())
                 .build();
-        studioManager.add(studio);
+        studioManager.persist(studio);
+        categoryManager.addDefaultCategories(studio);
         return studio;
     }
 
-    private Person createPerson(Realm realm, Studio studio, String username, String password,
+    private Person createPerson(Realm realm, StudioEntity studio, String username, String password,
             String email, String firstName, String lastName, boolean isEmployee, boolean isStudent,
             boolean isGuardian, RealmRole... roles) {
 
@@ -172,7 +173,7 @@ public class IdmPopulator {
         }
     }
 
-    private Iterator<NameEntry> createClients(Studio studio, Iterator<NameEntry> it, int familyCount) {
+    private Iterator<NameEntry> createClients(StudioEntity studio, Iterator<NameEntry> it, int familyCount) {
 
         while (familyCount > 0) {
             if (!it.hasNext()) {
@@ -225,14 +226,14 @@ public class IdmPopulator {
         return it;
     }
 
-    private void addClasses(Studio cadStudio, Person... instructors) {
+    private void addClasses(StudioEntity cadStudio, Person... instructors) {
         int insIndex = 0;
         for (ClassDef classDef : GROUP_CLASSES) {
-            CategoryOptionEntity genreOption = classDef.getGenre() == null ? null
+            CategoryEntity genreOption = classDef.getGenre() == null ? null
                     : categoryManager.findForOption(cadStudio, CategoryType.CLASS_GENRE, classDef.getGenre());
-            CategoryOptionEntity levelOption = classDef.getLevel() == null ? null
+            CategoryEntity levelOption = classDef.getLevel() == null ? null
                     : categoryManager.findForOption(cadStudio, CategoryType.CLASS_LEVEL, classDef.getLevel());
-            GroupClass gc = GroupClass.builder()
+            Course gc = Course.builder()
                     .genre(genreOption)
                     .classLevel(levelOption)
                     .title(classDef.title)

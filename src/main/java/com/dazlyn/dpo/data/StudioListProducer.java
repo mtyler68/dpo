@@ -1,7 +1,7 @@
 package com.dazlyn.dpo.data;
 
-import com.dazlyn.dpo.model.Studio;
-import com.dazlyn.dpo.model.StudioManager;
+import com.dazlyn.dpo.model.StudioEntity;
+import com.dazlyn.dpo.dao.StudioRepository;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -16,10 +16,10 @@ public class StudioListProducer {
     @Produces
     @Named
     @Getter
-    private List<Studio> studios;
+    private List<StudioEntity> studios;
 
     @Inject
-    private StudioManager studioManager;
+    private StudioRepository studioManager;
 
     @PostConstruct
     public void initStudios() {

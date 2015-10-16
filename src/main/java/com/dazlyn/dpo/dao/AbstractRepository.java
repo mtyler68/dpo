@@ -1,5 +1,6 @@
-package com.dazlyn.dpo.model;
+package com.dazlyn.dpo.dao;
 
+import com.dazlyn.dpo.model.AbstractEntity;
 import java.util.List;
 import java.util.UUID;
 import javax.inject.Inject;
@@ -11,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter(AccessLevel.PROTECTED)
 @RequiredArgsConstructor
-public class AbstractEntityManager<K, E> {
+public class AbstractRepository<K, E> {
 
     @Inject
     private EntityManager entityManager;
@@ -20,7 +21,7 @@ public class AbstractEntityManager<K, E> {
 
     private final Class<E> entityClass;
 
-    public AbstractEntityManager() {
+    public AbstractRepository() {
         keyClass = (Class<K>) String.class;
         entityClass = (Class<E>) Object.class;
     }
@@ -56,5 +57,9 @@ public class AbstractEntityManager<K, E> {
 
     public void refresh(E entity) {
         getEntityManager().refresh(entity);
+    }
+    
+    public void flush() {
+        getEntityManager().flush();
     }
 }

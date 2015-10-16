@@ -2,10 +2,10 @@ package com.dazlyn.dpo.view;
 
 import com.dazlyn.dpo.model.CategoryType;
 import com.dazlyn.dpo.dao.CategoryRepository;
-import com.dazlyn.dpo.model.CategoryOptionEntity;
+import com.dazlyn.dpo.model.CategoryEntity;
 import com.dazlyn.dpo.model.Classroom;
-import com.dazlyn.dpo.model.GroupClass;
-import com.dazlyn.dpo.model.GroupClassManager;
+import com.dazlyn.dpo.model.Course;
+import com.dazlyn.dpo.dao.CourseRepository;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -20,19 +20,19 @@ import lombok.Setter;
 public class GroupClassesView extends AbstractStudioView implements Serializable {
 
     @Getter
-    private List<GroupClass> groupClasses;
+    private List<Course> groupClasses;
 
     @Getter
     @Setter
-    private List<GroupClass> filteredGroupClasses;
+    private List<Course> filteredGroupClasses;
 
     @Getter
     @Setter
-    private GroupClass selectedGroupClass;
+    private Course selectedGroupClass;
 
     @Getter
     @Setter
-    private GroupClass newGroupClass;
+    private Course newGroupClass;
 
     @Getter
     private String classRoomString;
@@ -42,7 +42,7 @@ public class GroupClassesView extends AbstractStudioView implements Serializable
     private Classroom classRoom;
 
     @Inject
-    private GroupClassManager groupClassManager;
+    private CourseRepository groupClassManager;
 
     @Inject
     private CategoryRepository categoryManager;
@@ -50,7 +50,7 @@ public class GroupClassesView extends AbstractStudioView implements Serializable
     @PostConstruct
     public void init() {
         loadGroupClasses();
-        newGroupClass = new GroupClass();
+        newGroupClass = new Course();
     }
 
     private void loadGroupClasses() {
@@ -62,11 +62,11 @@ public class GroupClassesView extends AbstractStudioView implements Serializable
     }
 
     public void prepareNewGroupClass() {
-        newGroupClass = new GroupClass();
+        newGroupClass = new Course();
     }
 
-    public List<CategoryOptionEntity> categoryOptions(String category) {
-        return categoryManager.findForCategory(getStudio(), CategoryType.valueOf(category));
+    public List<CategoryEntity> categoryOptions(String category) {
+        return categoryManager.findAllForType(getStudio(), CategoryType.valueOf(category));
     }
 
     public void setClassRoom(String value) {

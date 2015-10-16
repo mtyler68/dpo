@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +19,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Builder;
 
-@Entity(name = "studio")
+@Entity
+@Table(name = "studio")
 @NamedQueries({
     @NamedQuery(name = "Studio.findAll",
             query = "SELECT s FROM studio s"),
@@ -30,7 +34,7 @@ import lombok.experimental.Builder;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString(exclude = {"families"})
-public class Studio extends AbstractEntity implements Serializable {
+public class StudioEntity extends AbstractEntity implements Serializable {
 
     private String name;
 
@@ -42,4 +46,6 @@ public class Studio extends AbstractEntity implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "studio")
     private List<Family> families = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    private StudioStatus status;
 }

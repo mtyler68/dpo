@@ -1,7 +1,7 @@
 package com.dazlyn.dpo.view;
 
 import com.dazlyn.dpo.model.Classroom;
-import com.dazlyn.dpo.model.ClassroomManager;
+import com.dazlyn.dpo.dao.ClassroomRepository;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -17,7 +17,7 @@ import lombok.Setter;
 public class ClassroomsView extends AbstractStudioView implements Serializable {
 
     @Inject
-    private ClassroomManager roomManager;
+    private ClassroomRepository roomManager;
 
     @Getter
     @Setter

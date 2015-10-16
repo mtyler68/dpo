@@ -1,7 +1,7 @@
 package com.dazlyn.dpo.view;
 
-import com.dazlyn.dpo.model.Studio;
-import com.dazlyn.dpo.model.StudioManager;
+import com.dazlyn.dpo.model.StudioEntity;
+import com.dazlyn.dpo.dao.StudioRepository;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -17,10 +17,10 @@ public abstract class AbstractStudioView implements Serializable {
 
     @Inject
     @Getter(AccessLevel.PROTECTED)
-    private transient StudioManager studioManager;
+    private transient StudioRepository studioManager;
 
     @Getter(AccessLevel.PROTECTED)
-    private transient Studio studio;
+    private transient StudioEntity studio;
 
     @PostConstruct
     public void initStudio() {

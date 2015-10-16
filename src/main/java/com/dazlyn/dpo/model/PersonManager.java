@@ -37,13 +37,13 @@ public class PersonManager {
         em.persist(person);
     }
 
-    public List<Person> findByStudio(Studio studio) {
+    public List<Person> findByStudio(StudioEntity studio) {
         return em.createNamedQuery("Person.findByStudio", Person.class)
                 .setParameter("studio", studio)
                 .getResultList();
     }
 
-    public List<Person> findStudentsByStudio(Studio studio) {
+    public List<Person> findStudentsByStudio(StudioEntity studio) {
         return em.createNamedQuery("Person.findStudentsByStudio", Person.class)
                 .setParameter("studio", studio)
                 .getResultList();

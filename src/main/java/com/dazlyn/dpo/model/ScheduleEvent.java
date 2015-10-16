@@ -37,7 +37,7 @@ public class ScheduleEvent extends AbstractStudioEntity implements Serializable 
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "group_class_uid", nullable = true)
-    private GroupClass GroupClass;
+    private Course GroupClass;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "person_uid", nullable = true)
