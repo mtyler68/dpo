@@ -1,0 +1,12 @@
+[
+  {
+    "name" : "Dazlyn",
+    "code" : "dazlyn",
+    "status" : "ACTIVE"            
+  },
+  {
+    "name" : "Coronado Academy of Dance",
+    "code" : "coronadodance",
+    "status" : "ACTIVE"
+  }
+]
