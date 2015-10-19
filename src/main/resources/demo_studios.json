@@ -8,5 +8,10 @@
     "name" : "Coronado Academy of Dance",
     "code" : "coronadodance",
     "status" : "ACTIVE"
+  },
+  {
+    "name" : "Epic Dance",
+    "code" : "epicdance",
+    "status" : "DEMO"
   }
 ]

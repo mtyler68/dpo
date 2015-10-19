@@ -50,7 +50,7 @@ public class Person implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "studio_uid")
-    private StudioEntity studio;
+    private Studio studio;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "family_uid", insertable = false, updatable = false)

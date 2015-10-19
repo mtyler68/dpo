@@ -1,6 +1,6 @@
 package com.dazlyn.dpo.controller;
 
-import com.dazlyn.dpo.model.StudioEntity;
+import com.dazlyn.dpo.model.Studio;
 import com.dazlyn.dpo.dao.StudioRepository;
 import javax.inject.Inject;
 import lombok.AccessLevel;
@@ -17,7 +17,7 @@ public abstract class AbstractSecureController {
     @Getter(AccessLevel.PROTECTED)
     private StudioRepository studioManager;
 
-    protected StudioEntity geStudio() {
+    protected Studio geStudio() {
         String id = identity.getAccount().getPartition().getId();
         return studioManager.findByRealmId(id);
     }

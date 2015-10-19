@@ -19,7 +19,7 @@ public abstract class AbstractStudioEntity extends AbstractEntity implements Ser
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "studio_uid", nullable = false)
-    private StudioEntity studio;
+    private Studio studio;
 
     private boolean archived;
 

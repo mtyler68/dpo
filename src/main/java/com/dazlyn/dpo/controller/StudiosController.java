@@ -1,7 +1,7 @@
 package com.dazlyn.dpo.controller;
 
 import com.dazlyn.dpo.dao.CategoryRepository;
-import com.dazlyn.dpo.model.StudioEntity;
+import com.dazlyn.dpo.model.Studio;
 import com.dazlyn.dpo.dao.StudioRepository;
 import com.dazlyn.dpo.security.RealmManager;
 import javax.enterprise.inject.Model;
@@ -42,7 +42,7 @@ public class StudiosController {
 
         // TODO: Needs validation
         Realm realm = realmManager.createRealm(code);
-        StudioEntity studio = StudioEntity.builder()
+        Studio studio = Studio.builder()
                 .code(code)
                 .name(studioName)
                 .realmId(realm.getId())

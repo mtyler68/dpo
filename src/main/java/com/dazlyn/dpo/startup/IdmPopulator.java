@@ -9,7 +9,7 @@ import com.dazlyn.dpo.model.Course;
 import com.dazlyn.dpo.dao.CourseRepository;
 import com.dazlyn.dpo.model.Person;
 import com.dazlyn.dpo.model.PersonManager;
-import com.dazlyn.dpo.model.StudioEntity;
+import com.dazlyn.dpo.model.Studio;
 import com.dazlyn.dpo.dao.StudioRepository;
 import com.dazlyn.dpo.model.StudioSettings;
 import com.dazlyn.dpo.model.StudioSettingsManager;
@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +33,8 @@ import org.picketlink.idm.PartitionManager;
 import org.picketlink.idm.model.basic.Realm;
 import org.picketlink.idm.model.basic.User;
 
-@javax.ejb.Singleton
-@javax.ejb.Startup
+//@javax.ejb.Singleton
+//@javax.ejb.Startup
 @Slf4j
 public class IdmPopulator {
 
@@ -77,7 +76,7 @@ public class IdmPopulator {
 
     private Random rand = new Random(System.currentTimeMillis());
 
-    @PostConstruct
+//    @PostConstruct
     public void create() {
 
         // Make sure we are in development mode
@@ -85,19 +84,18 @@ public class IdmPopulator {
 
             // Dazlyn
             Realm dazlynRealm = realmManager.createRealm("dazlyn");
-            StudioEntity dazlynStudio = createStudio(dazlynRealm, "Dazlyn");
+            Studio dazlynStudio = createStudio(dazlynRealm, "Dazlyn");
 
             Person adamPerson = createPerson(dazlynRealm, dazlynStudio, "adam", "adam",
                     "adam@dazlyn.com", "Adam", "Admin", true, false, false, RealmRole.ADMIN);
 
             // Coronado Dance
             Realm cadRealm = realmManager.createRealm("coronadodance");
-            StudioEntity cadStudio = createStudio(cadRealm, "Coronado Academy of Dance");
+            Studio cadStudio = createStudio(cadRealm, "Coronado Academy of Dance");
 
             StudioSettings cadSettings = new StudioSettings();
             cadSettings.setStudio(cadStudio);
             studioSettingsManager.persist(cadSettings);
-
 
             Person indiaPerson = createPerson(cadRealm, cadStudio, "india", "india",
                     "india@coronadodance.com", "India", "Instructor", true, false, false, RealmRole.INSTRUCTOR);
@@ -105,7 +103,7 @@ public class IdmPopulator {
 
             // Epic Dance
             Realm epicRealm = realmManager.createRealm("epicdance");
-            StudioEntity epicStudio = createStudio(epicRealm, "Epic Dance");
+            Studio epicStudio = createStudio(epicRealm, "Epic Dance");
             addClasses(epicStudio, indiaPerson);
 
             try {
@@ -119,8 +117,8 @@ public class IdmPopulator {
         }
     }
 
-    private StudioEntity createStudio(Realm realm, String name) {
-        StudioEntity studio = StudioEntity.builder()
+    private Studio createStudio(Realm realm, String name) {
+        Studio studio = Studio.builder()
                 .code(realm.getName())
                 .name(name)
                 .realmId(realm.getId())
@@ -130,7 +128,7 @@ public class IdmPopulator {
         return studio;
     }
 
-    private Person createPerson(Realm realm, StudioEntity studio, String username, String password,
+    private Person createPerson(Realm realm, Studio studio, String username, String password,
             String email, String firstName, String lastName, boolean isEmployee, boolean isStudent,
             boolean isGuardian, RealmRole... roles) {
 
@@ -173,7 +171,7 @@ public class IdmPopulator {
         }
     }
 
-    private Iterator<NameEntry> createClients(StudioEntity studio, Iterator<NameEntry> it, int familyCount) {
+    private Iterator<NameEntry> createClients(Studio studio, Iterator<NameEntry> it, int familyCount) {
 
         while (familyCount > 0) {
             if (!it.hasNext()) {
@@ -226,7 +224,7 @@ public class IdmPopulator {
         return it;
     }
 
-    private void addClasses(StudioEntity cadStudio, Person... instructors) {
+    private void addClasses(Studio cadStudio, Person... instructors) {
         int insIndex = 0;
         for (ClassDef classDef : GROUP_CLASSES) {
             CategoryEntity genreOption = classDef.getGenre() == null ? null

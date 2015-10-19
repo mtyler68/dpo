@@ -36,7 +36,7 @@ public class AbstractRepository<K, E> {
 
     public List<E> findAll() {
         return getEntityManager().createQuery(
-                "SELECT x FROM " + getEntityClass().getSimpleName() + " x WHERE", getEntityClass())
+                "SELECT x FROM " + getEntityClass().getSimpleName() + " x", getEntityClass())
                 .getResultList();
     }
 
@@ -58,7 +58,7 @@ public class AbstractRepository<K, E> {
     public void refresh(E entity) {
         getEntityManager().refresh(entity);
     }
-    
+
     public void flush() {
         getEntityManager().flush();
     }

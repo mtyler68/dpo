@@ -2,9 +2,9 @@ package com.dazlyn.dpo.controller;
 
 import com.dazlyn.dpo.model.Family;
 import com.dazlyn.dpo.model.FamilyManager;
-import com.dazlyn.dpo.model.StudioEntity;
 import com.dazlyn.dpo.dao.StudioRepository;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -44,8 +44,9 @@ public class FamiliesController implements Serializable {
     @PostConstruct
     public void init() {
         String id = identity.getAccount().getPartition().getId();
-        StudioEntity studio = studioManager.findByRealmIdWithFamilies(id);
-        families = studio.getFamilies();
+//        Studio studio = studioManager.findByRealmIdWithFamilies(id);
+//        families = studio.getFamilies();
+        families = new ArrayList<>();
     }
 
     @Transactional

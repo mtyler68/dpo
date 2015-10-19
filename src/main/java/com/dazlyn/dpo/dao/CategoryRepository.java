@@ -2,7 +2,7 @@ package com.dazlyn.dpo.dao;
 
 import com.dazlyn.dpo.model.CategoryEntity;
 import com.dazlyn.dpo.model.CategoryType;
-import com.dazlyn.dpo.model.StudioEntity;
+import com.dazlyn.dpo.model.Studio;
 import java.util.List;
 import java.util.UUID;
 import javax.enterprise.context.ApplicationScoped;
@@ -29,11 +29,11 @@ public class CategoryRepository extends AbstractStudioRepository<String, Categor
         super(String.class, CategoryEntity.class);
     }
 
-    public List<CategoryEntity> findAllForType(StudioEntity studio, CategoryType category) {
+    public List<CategoryEntity> findAllForType(Studio studio, CategoryType category) {
         return findAllForType(studio, category, false);
     }
 
-    public List<CategoryEntity> findAllForType(StudioEntity studio, CategoryType category, boolean archived) {
+    public List<CategoryEntity> findAllForType(Studio studio, CategoryType category, boolean archived) {
         return getEntityManager().createNamedQuery("CategoryEntity.findAllForType", CategoryEntity.class)
                 .setParameter("studio", studio)
                 .setParameter("category", category)
@@ -48,7 +48,7 @@ public class CategoryRepository extends AbstractStudioRepository<String, Categor
      * @param value
      * @return Can return null if not found.
      */
-    public CategoryEntity findForOption(StudioEntity studio, CategoryType category, String value) {
+    public CategoryEntity findForOption(Studio studio, CategoryType category, String value) {
         List<CategoryEntity> results = getEntityManager().createNamedQuery("CategoryOption.findForOption", CategoryEntity.class)
                 .setParameter("studio", studio)
                 .setParameter("category", category)
@@ -57,7 +57,7 @@ public class CategoryRepository extends AbstractStudioRepository<String, Categor
         return results.isEmpty() ? null : results.get(0);
     }
     
-    public void addDefaultCategories(StudioEntity studio) {
+    public void addDefaultCategories(Studio studio) {
         for (Object[] options : DEFAULT_CATEGORIES) {
             CategoryType type = (CategoryType) options[0];
             for (int ndx = 1; ndx < options.length; ndx++) {

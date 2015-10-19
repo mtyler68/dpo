@@ -1,7 +1,6 @@
 package com.dazlyn.dpo.dao;
 
-import com.dazlyn.dpo.dao.AbstractRepository;
-import com.dazlyn.dpo.model.StudioEntity;
+import com.dazlyn.dpo.model.Studio;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -11,25 +10,17 @@ import lombok.extern.slf4j.Slf4j;
 @ApplicationScoped
 @Named
 @Slf4j
-public class StudioRepository extends AbstractRepository<String, StudioEntity> {
+public class StudioRepository extends AbstractRepository<String, Studio> {
 
     public StudioRepository() {
-        super(String.class, StudioEntity.class);
-    }
-    
-    public StudioEntity findByRealmId(String realmId) {
-        TypedQuery<StudioEntity> query = getEntityManager()
-                .createNamedQuery("Studio.findByRealmId", StudioEntity.class)
-                .setParameter("realmId", realmId);
-        List results = query.getResultList();
-        return (StudioEntity) (results.isEmpty() ? null : results.get(0));
+        super(String.class, Studio.class);
     }
 
-    public StudioEntity findByRealmIdWithFamilies(String realmId) {
-        TypedQuery<StudioEntity> query = getEntityManager()
-                .createNamedQuery("Studio.findByRealmIdWithFamilies", StudioEntity.class)
+    public Studio findByRealmId(String realmId) {
+        TypedQuery<Studio> query = getEntityManager()
+                .createNamedQuery("Studio.findByRealmId", Studio.class)
                 .setParameter("realmId", realmId);
         List results = query.getResultList();
-        return (StudioEntity) (results.isEmpty() ? null : results.get(0));
+        return (Studio) (results.isEmpty() ? null : results.get(0));
     }
 }

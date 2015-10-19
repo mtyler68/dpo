@@ -2,7 +2,7 @@ package com.dazlyn.dpo.controller;
 
 import com.dazlyn.dpo.model.Person;
 import com.dazlyn.dpo.model.PersonManager;
-import com.dazlyn.dpo.model.StudioEntity;
+import com.dazlyn.dpo.model.Studio;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -18,7 +18,7 @@ public class StudentsController implements Serializable {
 
     @Inject
     @Named("studio")
-    private StudioEntity studio;
+    private Studio studio;
 
     @Inject
     private PersonManager personManager;

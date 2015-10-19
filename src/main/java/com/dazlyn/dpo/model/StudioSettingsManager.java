@@ -12,7 +12,7 @@ public class StudioSettingsManager extends AbstractRepository<String, StudioSett
         super(String.class, StudioSettings.class);
     }
 
-    public StudioSettings findForStudio(StudioEntity stuio) {
+    public StudioSettings findForStudio(Studio stuio) {
         return getEntityManager().createNamedQuery("StudioSettings.findForStudio", StudioSettings.class)
                 .setParameter("studio", stuio)
                 .getSingleResult();

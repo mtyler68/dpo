@@ -1,10 +1,12 @@
 package com.dazlyn.dpo.dao;
 
 import com.dazlyn.dpo.model.AbstractStudioEntity;
-import com.dazlyn.dpo.model.StudioEntity;
+import com.dazlyn.dpo.model.Studio;
 import java.util.Date;
 import java.util.List;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public abstract class AbstractStudioRepository<K, E> extends AbstractRepository<K, E> {
 
     protected AbstractStudioRepository(Class<K> keyClass, Class<E> entityClass) {
@@ -23,11 +25,11 @@ public abstract class AbstractStudioRepository<K, E> extends AbstractRepository<
                 .getResultList();
     }
 
-    public List<E> findAll(StudioEntity studio) {
+    public List<E> findAll(Studio studio) {
         return findAll(studio, false);
     }
 
-    public List<E> findAll(StudioEntity studio, boolean isArchived) {
+    public List<E> findAll(Studio studio, boolean isArchived) {
         return getEntityManager().createQuery(
                 "SELECT x FROM " + getEntityClass().getSimpleName() + " x WHERE x.studio = :studio AND x.archived = :isArchived", getEntityClass())
                 .setParameter("studio", studio)

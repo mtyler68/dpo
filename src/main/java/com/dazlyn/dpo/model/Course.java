@@ -22,7 +22,7 @@ import lombok.experimental.Builder;
 @Table(name = "course")
 @NamedQueries({
     @NamedQuery(name = "GroupClass.findAllByStudio",
-            query = "SELECT gc FROM Course c WHERE c.studio = :studio AND c.archived = :archived")
+            query = "SELECT c FROM Course c WHERE c.studio = :studio AND c.archived = :archived")
 })
 @Data
 @Builder
