@@ -1,6 +1,7 @@
 package com.dazlyn.dpo.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -53,22 +55,23 @@ public class Person implements Serializable {
     private Studio studio;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "family_uid", insertable = false, updatable = false)
-    private Family family;
+    @JoinColumn(name = "main_person_uid", insertable = false, updatable = false)
+    private Person mainPerson;
 
-    /**
-     * When true, this person is the guardian to the students related by family.
-     */
-    private boolean typeGuardian;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "main_person_uid")
+    private List<Person> members = new ArrayList<>();
 
     /**
      * When true, this person is a student and will appear in the list of students.
      */
+    @Column(name = "type_student")
     private boolean typeStudent;
 
     /**
      * When true, this person is an employee and will show up in employee related lists, which can include instructors.
      */
+    @Column(name = "type_employee")
     private boolean typeEmployee;
 
     @ManyToMany(
