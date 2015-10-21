@@ -1,16 +1,16 @@
 package com.dazlyn.dpo.startup;
 
-import com.dazlyn.dpo.model.CategoryType;
 import com.dazlyn.dpo.dao.CategoryRepository;
+import com.dazlyn.dpo.dao.CourseRepository;
+import com.dazlyn.dpo.dao.PersonRepository;
+import com.dazlyn.dpo.dao.StudioRepository;
 import com.dazlyn.dpo.model.CategoryEntity;
+import com.dazlyn.dpo.model.CategoryType;
+import com.dazlyn.dpo.model.Course;
 import com.dazlyn.dpo.model.Family;
 import com.dazlyn.dpo.model.FamilyManager;
-import com.dazlyn.dpo.model.Course;
-import com.dazlyn.dpo.dao.CourseRepository;
 import com.dazlyn.dpo.model.Person;
-import com.dazlyn.dpo.model.PersonManager;
 import com.dazlyn.dpo.model.Studio;
-import com.dazlyn.dpo.dao.StudioRepository;
 import com.dazlyn.dpo.model.StudioSettings;
 import com.dazlyn.dpo.model.StudioSettingsManager;
 import com.dazlyn.dpo.security.RealmManager;
@@ -49,7 +49,7 @@ public class IdmPopulator {
     private StudioRepository studioManager;
 
     @Inject
-    private PersonManager personManager;
+    private PersonRepository personManager;
 
     @Inject
     private CourseRepository groupClassManager;
@@ -138,13 +138,12 @@ public class IdmPopulator {
                 .email(email)
                 .firstName(firstName)
                 .lastName(lastName)
-                .studio(studio)
                 .typeEmployee(isEmployee)
-                .typeGuardian(isGuardian)
                 .typeStudent(isStudent)
                 .userId(user.getId())
                 .build();
-        personManager.add(person);
+        person.setStudio(studio);
+        personManager.persist(person);
 
         realmManager.grantRoles(realm, user, roles);
 
@@ -185,13 +184,12 @@ public class IdmPopulator {
                     .email(mainEntry.getFirstName().toLowerCase() + '.' + mainEntry.getLastName().toLowerCase() + "@example.com")
                     .firstName(mainEntry.getFirstName())
                     .lastName(mainEntry.getLastName())
-                    .studio(studio)
                     .typeEmployee(false)
-                    .typeGuardian(numStudents > 0)
                     .typeStudent(numStudents == 0)
                     .userId(null)
                     .build();
-            personManager.add(mainPerson);
+            mainPerson.setStudio(studio);
+            personManager.persist(mainPerson);
             mainPerson = personManager.find(mainPerson.getUid());
 
             Family family = new Family();
@@ -211,10 +209,10 @@ public class IdmPopulator {
                 Person student = Person.builder()
                         .firstName(studentEntry.getFirstName())
                         .lastName(mainEntry.getLastName())
-                        .studio(studio)
                         .typeStudent(true)
                         .build();
-                personManager.add(student);
+                student.setStudio(studio);
+                personManager.persist(student);
                 family.getMembers().add(student);
             }
             familyManager.update(family);

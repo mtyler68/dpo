@@ -1,16 +1,17 @@
 package com.dazlyn.dpo.startup;
 
 import com.dazlyn.dpo.dao.CategoryRepository;
+import com.dazlyn.dpo.dao.PersonRepository;
 import com.dazlyn.dpo.dao.StudioRepository;
-import com.dazlyn.dpo.model.Family;
 import com.dazlyn.dpo.model.Person;
-import com.dazlyn.dpo.model.PersonManager;
 import com.dazlyn.dpo.model.Studio;
 import com.dazlyn.dpo.security.RealmManager;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -31,13 +32,13 @@ public class DemoLoader {
     private StudioRepository studioRepo;
 
     @Inject
-    private CategoryRepository categoryManager;
+    private CategoryRepository categoryRepo;
 
     @Inject
     private RealmManager realmManager;
 
     @Inject
-    private PersonManager personManager;
+    private PersonRepository personRepo;
 
     @PostConstruct
     public void init() {
@@ -57,6 +58,8 @@ public class DemoLoader {
                 Realm realm = realmManager.createRealm(studio.getCode());
                 studio.setRealmId(realm.getId());
                 studioRepo.persist(studio);
+                categoryRepo.addDefaultCategories(studio);
+                studioRepo.flush();
 
                 addClients(200, dci, studio);
 
@@ -76,44 +79,17 @@ public class DemoLoader {
             Person mainPerson = createPerson(studio, null, contact);
             mainPerson.setTypeStudent(numStudents == 0);
 
-            Person mainPerson = Person.builder()
-                    .email(mainEntry.getFirstName().toLowerCase() + '.' + mainEntry.getLastName().toLowerCase() + "@example.com")
-                    .firstName(mainEntry.getFirstName())
-                    .lastName(mainEntry.getLastName())
-                    .studio(studio)
-                    .typeEmployee(false)
-                    .typeGuardian(numStudents > 0)
-                    .typeStudent(numStudents == 0)
-                    .userId(null)
-                    .build();
-            personManager.add(mainPerson);
-            mainPerson = personManager.find(mainPerson.getUid());
-
-            Family family = new Family();
-            family.setMainPerson(mainPerson);
-            family.setStudio(studio);
-            family.getMembers().add(mainPerson);
-            familyManager.add(family);
-
-            family = familyManager.find(family.getUid());
-
             for (int ndx = 0; ndx < numStudents; ndx++) {
-                if (!it.hasNext()) {
-                    it = names.iterator();
-                }
-                IdmPopulator.NameEntry studentEntry = it.next();
-
-                Person student = Person.builder()
-                        .firstName(studentEntry.getFirstName())
-                        .lastName(mainEntry.getLastName())
-                        .studio(studio)
-                        .typeStudent(true)
-                        .build();
-                personManager.add(student);
-                family.getMembers().add(student);
+                contact = it.next();
+                Person student = createPerson(studio, mainPerson, contact);
+                student.setUid(UUID.randomUUID().toString());
+                student.setLastName(mainPerson.getLastName());
+                personRepo.persist(student);
+                mainPerson.getMembers().add(student);
             }
-            familyManager.update(family);
-            familyCount--;
+
+            personRepo.persist(mainPerson);
+            personRepo.flush();
         }
     }
 
@@ -122,10 +98,10 @@ public class DemoLoader {
                 .email(contact.getEmail())
                 .firstName(contact.getFirstName())
                 .lastName(contact.getLastName())
-                .mainPerson(mainPerson)
-                .studio(studio)
                 .typeStudent(mainPerson != null)
+                .members(new ArrayList<Person>())
                 .build();
+        person.setStudio(studio);
         return person;
     }
 

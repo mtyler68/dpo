@@ -25,17 +25,20 @@ public class DemoContactIterable implements Iterable<DemoContact> {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             String line = br.readLine();
             while (line != null) {
-                String[] tokens = line.split(",");
-                contacts.add(DemoContact.builder()
-                        .firstName(tokens[0].trim())
-                        .lastName(tokens[1].trim())
-                        .streetAddress(tokens[2].trim())
-                        .city(tokens[3].trim())
-                        .state(tokens[4].trim())
-                        .zipCode(tokens[5].trim())
-                        .country(tokens[6].trim())
-                        .phone(tokens[7].trim())
-                        .build());
+                if (!line.trim().startsWith("#") && !"".equals(line.trim())) {
+                    String[] tokens = line.split(",");
+                    contacts.add(DemoContact.builder()
+                            .firstName(tokens[0].trim())
+                            .lastName(tokens[1].trim())
+                            .streetAddress(tokens[2].trim())
+                            .city(tokens[3].trim())
+                            .state(tokens[4].trim())
+                            .zipCode(tokens[5].trim())
+                            .country(tokens[6].trim())
+                            .phone(tokens[7].trim())
+                            .build());
+                }
+
                 line = br.readLine();
             }
         }

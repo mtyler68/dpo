@@ -1,7 +1,7 @@
 package com.dazlyn.dpo.controller;
 
 import com.dazlyn.dpo.model.Person;
-import com.dazlyn.dpo.model.PersonManager;
+import com.dazlyn.dpo.dao.PersonRepository;
 import com.dazlyn.dpo.model.Studio;
 import java.io.Serializable;
 import java.util.List;
@@ -21,7 +21,7 @@ public class StudentsController implements Serializable {
     private Studio studio;
 
     @Inject
-    private PersonManager personManager;
+    private PersonRepository personManager;
 
     @Getter
     private List<Person> students;
