@@ -1,5 +1,6 @@
 package com.dazlyn.dpo.security;
 
+import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -8,6 +9,7 @@ import org.picketlink.idm.PartitionManager;
 import org.picketlink.idm.credential.Password;
 import org.picketlink.idm.model.basic.Realm;
 import org.picketlink.idm.model.basic.User;
+import org.picketlink.idm.query.IdentityQueryBuilder;
 
 @Named
 @ApplicationScoped
@@ -29,4 +31,12 @@ public class UserManager {
         return user;
     }
 
+    public User find(Realm realm, String username) {
+        IdentityManager idm = partitionManager.createIdentityManager(realm);
+        IdentityQueryBuilder queryBuilder = idm.getQueryBuilder();
+        List<User> results = queryBuilder.createIdentityQuery(User.class)
+                .where(queryBuilder.equal(User.LOGIN_NAME, username))
+                .getResultList();
+        return results.isEmpty() ? null : results.get(0);
+    }
 }

@@ -1,17 +1,42 @@
 [
   {
-    "name" : "Dazlyn",
-    "code" : "dazlyn",
-    "status" : "ACTIVE"            
+    "studio" : {
+      "name" : "Dazlyn",
+      "code" : "dazlyn",
+      "status" : "ACTIVE"
+    },
+    "familyCount" : 0
   },
   {
-    "name" : "Coronado Academy of Dance",
-    "code" : "coronadodance",
-    "status" : "ACTIVE"
+    "studio" : {
+      "name" : "Coronado Academy of Dance",
+      "code" : "coronadodance",
+      "status" : "ACTIVE"
+    },
+    "familyCount" : 200,
+    "users" : [
+      {
+        "username" : "india",
+        "password" : "india",
+        "email" : "india@coronadodance.com",
+        "firstName" : "India",
+        "lastName" : "Instructor",
+        "typeEmployee" : true
+      }
+    ],
+    "roles" : [
+      {
+        "role" : "INSTRUCTOR",
+        "users" : ["india"]
+      }
+    ]
   },
   {
-    "name" : "Epic Dance",
-    "code" : "epicdance",
-    "status" : "DEMO"
+    "studio" : {
+      "name" : "Epic Dance",
+      "code" : "epicdance",
+      "status" : "DEMO"
+    },
+    "familyCount" : 500
   }
 ]
