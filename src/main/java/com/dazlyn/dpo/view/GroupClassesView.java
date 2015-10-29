@@ -2,7 +2,7 @@ package com.dazlyn.dpo.view;
 
 import com.dazlyn.dpo.model.CategoryType;
 import com.dazlyn.dpo.dao.CategoryRepository;
-import com.dazlyn.dpo.model.CategoryEntity;
+import com.dazlyn.dpo.model.Category;
 import com.dazlyn.dpo.model.Classroom;
 import com.dazlyn.dpo.model.Course;
 import com.dazlyn.dpo.dao.CourseRepository;
@@ -65,7 +65,7 @@ public class GroupClassesView extends AbstractStudioView implements Serializable
         newGroupClass = new Course();
     }
 
-    public List<CategoryEntity> categoryOptions(String category) {
+    public List<Category> categoryOptions(String category) {
         return categoryManager.findAllForType(getStudio(), CategoryType.valueOf(category));
     }
 

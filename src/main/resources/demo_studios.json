@@ -29,6 +29,28 @@
         "role" : "INSTRUCTOR",
         "users" : ["india"]
       }
+    ],
+    "courses" : [
+      {
+        "title" : "Ballet 5",
+        "genre" : "Ballet",
+        "level" : "Advanced"
+      },
+      {
+        "title" : "Ballet 3",
+        "genre" : "Ballet",
+        "level" : "Intermediate"
+      },
+      {
+        "title" : "Ballet 1",
+        "genre" : "Ballet",
+        "level" : "Beginner"
+      },
+      {
+        "title" : "DanceFUN",
+        "genre" : "Combo",
+        "level" : "Toddler"
+      }
     ]
   },
   {

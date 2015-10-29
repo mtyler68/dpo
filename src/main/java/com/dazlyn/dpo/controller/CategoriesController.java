@@ -2,7 +2,7 @@ package com.dazlyn.dpo.controller;
 
 import com.dazlyn.dpo.model.CategoryType;
 import com.dazlyn.dpo.dao.CategoryRepository;
-import com.dazlyn.dpo.model.CategoryEntity;
+import com.dazlyn.dpo.model.Category;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.view.ViewScoped;
@@ -29,11 +29,11 @@ public class CategoriesController extends AbstractSecureController implements Se
     private CategoryType selectedCategory;
 
     @Getter
-    private List<CategoryEntity> options;
+    private List<Category> options;
 
     @Getter
     @Setter
-    private CategoryEntity selectedOption;
+    private Category selectedOption;
 
     @Getter
     @Setter
@@ -60,7 +60,7 @@ public class CategoriesController extends AbstractSecureController implements Se
 
     @Transactional
     public void deleteSelectedOption() {
-        CategoryEntity option = categoryManager.find(selectedOption.getUid());
+        Category option = categoryManager.find(selectedOption.getUid());
         categoryManager.remove(option);
         options.remove(selectedOption);
         selectedOption = null;
@@ -84,7 +84,7 @@ public class CategoriesController extends AbstractSecureController implements Se
 
     private void updateSortOrders() {
         int index = 1;
-        for (CategoryEntity option : options) {
+        for (Category option : options) {
             option.setSortOrder(index++);
             categoryManager.merge(option);
         }
@@ -92,7 +92,7 @@ public class CategoriesController extends AbstractSecureController implements Se
 
     @Transactional
     public void save() {
-        CategoryEntity option = categoryManager.find(selectedOption.getUid());
+        Category option = categoryManager.find(selectedOption.getUid());
         option.setValue(optionValue);
         categoryManager.merge(option);
     }

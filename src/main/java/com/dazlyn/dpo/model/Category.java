@@ -18,14 +18,14 @@ import lombok.experimental.Builder;
 @Entity
 @Table(name = "category")
 @NamedQueries({
-    @NamedQuery(name = "CategoryEntity.findAllForType",
-            query = "SELECT c FROM CategoryEntity c "
+    @NamedQuery(name = "Category.findAllForType",
+            query = "SELECT c FROM Category c "
                     + "WHERE c.studio = :studio "
                     + "AND c.type = :category "
                     + "AND c.archived = :archived "
                     + "ORDER BY c.sortOrder ASC"),
-    @NamedQuery(name = "CategoryEntity.findForValue",
-            query = "SELECT c FROM CategoryEntity c "
+    @NamedQuery(name = "Category.findForValue",
+            query = "SELECT c FROM Category c "
                     + "WHERE c.studio = :studio "
                     + "AND c.type = :category "
                     + "AND c.value = :value")
@@ -35,7 +35,7 @@ import lombok.experimental.Builder;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Setter
-public class CategoryEntity extends AbstractStudioEntity implements Serializable {
+public class Category extends AbstractStudioEntity implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 30)

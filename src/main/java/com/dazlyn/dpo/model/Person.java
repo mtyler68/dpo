@@ -31,7 +31,7 @@ import lombok.experimental.Builder;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@ToString(exclude = {"mainPerson", "studio"})
+@ToString(exclude = {"mainPerson"})
 public class Person extends AbstractStudioEntity implements Serializable {
 
     @Column(name = "first_name")

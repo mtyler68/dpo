@@ -21,7 +21,7 @@ import lombok.experimental.Builder;
 @Entity
 @Table(name = "course")
 @NamedQueries({
-    @NamedQuery(name = "GroupClass.findAllByStudio",
+    @NamedQuery(name = "Course.findAllByStudio",
             query = "SELECT c FROM Course c WHERE c.studio = :studio AND c.archived = :archived")
 })
 @Data
@@ -34,11 +34,11 @@ public class Course extends AbstractStudioEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "genre_uid")
-    private CategoryEntity genre;
+    private Category genre;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "class_level_uid")
-    private CategoryEntity classLevel;
+    private Category classLevel;
 
     @ManyToMany(
             targetEntity = Person.class,

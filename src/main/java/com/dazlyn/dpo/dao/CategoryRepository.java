@@ -1,6 +1,6 @@
 package com.dazlyn.dpo.dao;
 
-import com.dazlyn.dpo.model.CategoryEntity;
+import com.dazlyn.dpo.model.Category;
 import com.dazlyn.dpo.model.CategoryType;
 import com.dazlyn.dpo.model.Studio;
 import java.util.List;
@@ -10,7 +10,7 @@ import javax.inject.Named;
 
 @Named
 @ApplicationScoped
-public class CategoryRepository extends AbstractStudioRepository<String, CategoryEntity> {
+public class CategoryRepository extends AbstractStudioRepository<String, Category> {
 
     private static final Object[][] DEFAULT_CATEGORIES = {
         {CategoryType.BILLING_SCHEDULE, "Monthly", "Quarterly", "Yearly", "Drop In Class", "Weekly"},
@@ -26,15 +26,15 @@ public class CategoryRepository extends AbstractStudioRepository<String, Categor
     };
     
     public CategoryRepository() {
-        super(String.class, CategoryEntity.class);
+        super(String.class, Category.class);
     }
 
-    public List<CategoryEntity> findAllForType(Studio studio, CategoryType category) {
+    public List<Category> findAllForType(Studio studio, CategoryType category) {
         return findAllForType(studio, category, false);
     }
 
-    public List<CategoryEntity> findAllForType(Studio studio, CategoryType category, boolean archived) {
-        return getEntityManager().createNamedQuery("CategoryEntity.findAllForType", CategoryEntity.class)
+    public List<Category> findAllForType(Studio studio, CategoryType category, boolean archived) {
+        return getEntityManager().createNamedQuery("CategoryEntity.findAllForType", Category.class)
                 .setParameter("studio", studio)
                 .setParameter("category", category)
                 .setParameter("archived", archived)
@@ -48,8 +48,8 @@ public class CategoryRepository extends AbstractStudioRepository<String, Categor
      * @param value
      * @return Can return null if not found.
      */
-    public CategoryEntity findForOption(Studio studio, CategoryType category, String value) {
-        List<CategoryEntity> results = getEntityManager().createNamedQuery("CategoryOption.findForOption", CategoryEntity.class)
+    public Category findForOption(Studio studio, CategoryType category, String value) {
+        List<Category> results = getEntityManager().createNamedQuery("CategoryOption.findForOption", Category.class)
                 .setParameter("studio", studio)
                 .setParameter("category", category)
                 .setParameter("value", value)
@@ -61,7 +61,7 @@ public class CategoryRepository extends AbstractStudioRepository<String, Categor
         for (Object[] options : DEFAULT_CATEGORIES) {
             CategoryType type = (CategoryType) options[0];
             for (int ndx = 1; ndx < options.length; ndx++) {
-                CategoryEntity category = CategoryEntity.builder()
+                Category category = Category.builder()
                         .type(type)
                         .sortOrder(ndx)
                         .value((String) options[ndx])

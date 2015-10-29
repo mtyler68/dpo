@@ -4,7 +4,7 @@ import com.dazlyn.dpo.dao.CategoryRepository;
 import com.dazlyn.dpo.dao.CourseRepository;
 import com.dazlyn.dpo.dao.PersonRepository;
 import com.dazlyn.dpo.dao.StudioRepository;
-import com.dazlyn.dpo.model.CategoryEntity;
+import com.dazlyn.dpo.model.Category;
 import com.dazlyn.dpo.model.CategoryType;
 import com.dazlyn.dpo.model.Course;
 import com.dazlyn.dpo.model.Family;
@@ -225,9 +225,9 @@ public class IdmPopulator {
     private void addClasses(Studio cadStudio, Person... instructors) {
         int insIndex = 0;
         for (ClassDef classDef : GROUP_CLASSES) {
-            CategoryEntity genreOption = classDef.getGenre() == null ? null
+            Category genreOption = classDef.getGenre() == null ? null
                     : categoryManager.findForOption(cadStudio, CategoryType.CLASS_GENRE, classDef.getGenre());
-            CategoryEntity levelOption = classDef.getLevel() == null ? null
+            Category levelOption = classDef.getLevel() == null ? null
                     : categoryManager.findForOption(cadStudio, CategoryType.CLASS_LEVEL, classDef.getLevel());
             Course gc = Course.builder()
                     .genre(genreOption)
