@@ -12,17 +12,17 @@
   <ui:define name="content">
     <ui:decorate template="/WEB-INF/templates/pagecontainer.xhtml">
       <ui:define name="content">
-        <br/>        
         <h:form>
           <p:tooltip/>
           <p:growl id="growl" showDetail="true"/>
 
-          <p:dataTable id="studentsTable" var="_student" value="#{studentsController.students}" rows="10" 
+          <p:dataTable id="studentsTable" var="student" value="#{studentsController.students}" rows="10" 
                        widgetVar="studentsTable"
                        paginator="true"
                        rowsPerPageTemplate="10,25,50,100"
                        emptyMessage="No students found"
-                       filteredValue="#{studentsController.filteredStudents}">
+                       filteredValue="#{studentsController.filteredStudents}"
+                       style="margin:-20px; border:none 0px;">
             <f:facet name="header">
               <p:outputPanel class="TexAlRight">
                 <h:outputText value="Search "/>
@@ -32,23 +32,22 @@
             </f:facet>
 
             <p:column headerText="Actions">
-              <p:button icon="fa fa-child Fs12 White" href="/back/studio/family/#{_student.family.uid}" title="Family account" style="height:18px"/>
+              <p:button icon="fa fa-child Fs12 White" href="/back/studio/family/#{student.mainPerson.uid}" title="Family account" style="height:18px"/>
             </p:column>
 
-            <p:column headerText="First Name" sortBy="#{_student.firstName}" 
-                      filterMatchMode="startsWith" filterBy="#{_student.firstName}" filterable="false">
-              <h:outputText value="#{_student.firstName}"/>
+            <p:column headerText="First Name" sortBy="#{student.firstName}" 
+                      filterMatchMode="startsWith" filterBy="#{student.firstName}" filterable="false">
+              <h:outputText value="#{student.firstName}"/>
             </p:column>
-            <p:column headerText="Last Name" sortBy="#{_student.lastName}"
-                      filterMatchMode="startsWith" filterBy="#{_student.lastName}" filterable="false">
-              <h:outputText value="#{_student.lastName}"/>
+            <p:column headerText="Last Name" sortBy="#{student.lastName}"
+                      filterMatchMode="startsWith" filterBy="#{student.lastName}" filterable="false">
+              <h:outputText value="#{student.lastName}"/>
             </p:column> 
             <p:column headerText="Email">
-              <h:outputText value="#{_student.email}"/>
+              <h:outputText value="#{student.email}"/>
             </p:column>
           </p:dataTable>
         </h:form>
-        <br/><br/>
       </ui:define>
 
     </ui:decorate>

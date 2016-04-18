@@ -1,0 +1,21 @@
+[
+  {
+    "studio" : "coronadodance",
+    "users" : [
+      {
+        "username" : "india",
+        "password" : "india",
+        "email" : "india@coronadodance.com",
+        "firstName" : "India",
+        "lastName" : "Instructor",
+        "typeEmployee" : true
+      }
+    ],
+    "roles" : [
+      {
+        "role" : "INSTRUCTOR",
+        "users" : ["india"]
+      }
+    ]
+  }
+]

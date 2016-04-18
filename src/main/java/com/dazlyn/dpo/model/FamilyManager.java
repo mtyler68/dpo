@@ -35,4 +35,8 @@ public class FamilyManager {
     public void refresh(Family family) {
         em.refresh(family);
     }
+
+    public void remove(Family family) {
+        em.remove(family);
+    }
 }

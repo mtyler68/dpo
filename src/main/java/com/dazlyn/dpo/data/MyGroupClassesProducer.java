@@ -1,6 +1,6 @@
 package com.dazlyn.dpo.data;
 
-import com.dazlyn.dpo.model.GroupClass;
+import com.dazlyn.dpo.model.Course;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
@@ -22,7 +22,7 @@ public class MyGroupClassesProducer {
 
     @Produces
     @Named
-    public List<GroupClass> myGroupClasses() {
+    public List<Course> myGroupClasses() {
         RelationshipQuery<GroupMembership> query = relationshipManager.createRelationshipQuery(GroupMembership.class);
         return null;
     }

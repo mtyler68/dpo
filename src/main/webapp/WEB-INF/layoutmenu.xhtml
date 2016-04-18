@@ -19,8 +19,13 @@
         <p:submenu id="rm_studio" label="Studio" icon="icon-movie">
           <p:menuitem id="rm_families" value="Families" icon="icon-people" outcome="pretty:families"/>
           <p:menuitem id="rm_students" value="Students" icon="icon-school" outcome="pretty:students"/>          
-          <p:menuitem id="rm_classes" value="Classes" icon="icon-class"/>
-          <p:menuitem id="rm_schedule" value="Schedule" icon="fa fa-calendar"/>
+          <p:menuitem id="rm_classes" value="Classes" icon="icon-class" outcome="pretty:classes"/>
+          <p:menuitem id="rm_schedule" value="Schedule" icon="fa fa-calendar" outcome="pretty:schedule"/>
+        </p:submenu>
+        
+        <p:submenu id="rm_settings" label="Settings" icon="icon-cog">
+          <p:menuitem id="rm_categories" value="Categories" outcome="pretty:categories"/>
+          <p:menuitem id="rm_class_rooms" value="Classrooms" outcome="pretty:classrooms"/>
         </p:submenu>
 
         <p:submenu id="colors" label="Color Variations" icon="icon-color_lens">

@@ -15,6 +15,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Builder;
 
 @Entity(name = "family")
@@ -22,6 +23,7 @@ import lombok.experimental.Builder;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
+@ToString(exclude = {"studio", "members"})
 public class Family implements Serializable {
 
     @Id

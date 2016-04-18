@@ -47,4 +47,8 @@ public class RealmManager {
             BasicModel.grantRole(relationshipManager, user, BasicModel.getRole(idm, role.name()));
         }
     }
+
+    public Realm findById(String id) {
+        return partitionManager.lookupById(Realm.class, id);
+    }
 }

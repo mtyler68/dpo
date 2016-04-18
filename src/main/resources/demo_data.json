@@ -1,0 +1,42 @@
+{
+  "studios" : [
+    {
+      "studio" : {
+        "name" : "Dazlyn",
+        "code" : "dazlyn",
+        "status" : "ACTIVE"            
+      }
+    },
+    {
+      "studio" : {
+        "name" : "Coronado Academy of Dance",
+        "code" : "coronadodance",
+        "status" : "ACTIVE"
+      },
+      "clients" : 200,
+      "users" : [
+        {
+          "username" : "india",
+          "password" : "india",
+          "email" : "india@coronadodance.com",
+          "firstName" : "India",
+          "lastName" : "Instructor",
+          "typeEmployee" : true
+        }
+      ],
+      "roles" : [
+        {
+          "role" : "INSTRUCTOR",
+          "users" : ["india"]
+        }
+      ]
+    },
+    {
+      "studio" : {
+        "name" : "Epic Dance",
+        "code" : "epicdance",
+        "status" : "DEMO"
+      }
+    }
+  ]
+}

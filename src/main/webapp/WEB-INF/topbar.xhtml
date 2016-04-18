@@ -18,7 +18,7 @@
       <!--<a href="/modena/dashboard.xhtml" id="logo">
         <h:graphicImage name="images/logo.svg" styleClass="Fleft" library="modena-layout" />
       </a>-->
-      <p:link outcome="pretty:dashboard">#{studio.name}</p:link>
+      <p:link outcome="pretty:dashboard" class="Fs30" style="color: whitesmoke !important;">#{studio.name}</p:link>
 
       <a id="show-top-menu" class="ShowOnMobile ripplelink"><i class="icon-more_vert" id="active"></i><i class="icon-close DispNone" id="passive"></i> </a>
 
@@ -34,7 +34,7 @@
         <li>
           <a class="ripplelink"><i class="icon-new_releases"></i> <span class="ShowOnMobile">Wizards</span></a>
           <ul>
-            <li><a href="#"><i class="icon-person_add"></i> New student...</a></li>
+            <li><p:link value=" New student..." href="/back/studio/newStudentWizard" styleClass="fa fa-user-plus"/></li>
             <li><a href="#"><i class="fa fa-magic"></i> New class...</a></li>
           </ul>
         </li>

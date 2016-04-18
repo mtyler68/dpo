@@ -1,0 +1,64 @@
+[
+  {
+    "studio" : {
+      "name" : "Dazlyn",
+      "code" : "dazlyn",
+      "status" : "ACTIVE"
+    },
+    "familyCount" : 0
+  },
+  {
+    "studio" : {
+      "name" : "Coronado Academy of Dance",
+      "code" : "coronadodance",
+      "status" : "ACTIVE"
+    },
+    "familyCount" : 200,
+    "users" : [
+      {
+        "username" : "india",
+        "password" : "india",
+        "email" : "india@coronadodance.com",
+        "firstName" : "India",
+        "lastName" : "Instructor",
+        "typeEmployee" : true
+      }
+    ],
+    "roles" : [
+      {
+        "role" : "INSTRUCTOR",
+        "users" : ["india"]
+      }
+    ],
+    "courses" : [
+      {
+        "title" : "Ballet 5",
+        "genre" : "Ballet",
+        "level" : "Advanced"
+      },
+      {
+        "title" : "Ballet 3",
+        "genre" : "Ballet",
+        "level" : "Intermediate"
+      },
+      {
+        "title" : "Ballet 1",
+        "genre" : "Ballet",
+        "level" : "Beginner"
+      },
+      {
+        "title" : "DanceFUN",
+        "genre" : "Combo",
+        "level" : "Toddler"
+      }
+    ]
+  },
+  {
+    "studio" : {
+      "name" : "Epic Dance",
+      "code" : "epicdance",
+      "status" : "DEMO"
+    },
+    "familyCount" : 500
+  }
+]
