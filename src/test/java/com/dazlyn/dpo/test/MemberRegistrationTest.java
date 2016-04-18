@@ -26,7 +26,7 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import com.dazlyn.dpo.model.Member;
 import com.dazlyn.dpo.service.MemberRegistration;
-import com.dazlyn.dpo.web.util.Resources;
+import com.dazlyn.dpo.util.Resources;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;

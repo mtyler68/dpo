@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+  <ui:define name="subheader">
+    Schedule
+  </ui:define>
+
+  <ui:define name="content">
+
+    <div class="Container70">
+      <div class="ContainerIndent">
+        <div class="Card ShadowEffect TexAlCenter">
+          <br/>
+
+          <h:form id="form">
+
+            <p:schedule id="schedule" widgetVar="schedule" value="#{scheduleView.model}"
+                        scrollTime="#{studioSettings.scheduleScrollTime}">
+              <p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}" update=":form:eventDlg" oncomplete="PF('eventDlg').show()"/>
+            </p:schedule>
+
+            <p:dialog id="eventDlg" widgetVar="eventDlg" header="Event" width="500">
+
+              <div class="Container40">
+                <p:panelGrid columns="1" layout="grid" style="border:0px !important;" styleClass="FormContent">
+
+                </p:panelGrid>
+              </div>
+              <div class="Container100">
+                <h:outputLabel value="Event Type:"/>
+                <p:selectOneMenu value="#{scheduleView.dialogModel.eventType}">
+                  <f:selectItem itemLabel="Event" itemValue="GLOBAL_EVENT"/>
+                  <f:selectItem itemLabel="Private Lesson" itemValue="PRIVATE_LESSON"/>
+                  <f:selectItem itemLabel="Class" itemValue="GROUP_CLASS"/>
+                </p:selectOneMenu>
+              </div>
+              <h:outputLabel value="Title:"/>
+              <p:inputText id="eventTitle" value="#{scheduleView.dialogModel.title}" placeholder="Event title"/>
+
+              <p:selectBooleanCheckbox id="eventAllDayEvent" value="#{scheduleView.dialogModel.allDayEvent}"/>
+
+              <h:outputLabel value="Start:"/>
+              <p:calendar id="eventStartDateTime" value="#{scheduleView.dialogModel.startDateTime}"
+                          pattern="MM/dd/yyyy HH:mm" stepMinute="5" timeControlType="select"/>
+
+              <h:outputLabel value="End:"/>
+              <p:calendar id="eventEndDateTime" value="#{scheduleView.dialogModel.endDateTime}"
+                          pattern="MM/dd/yyyy HH:mm" stepMinute="5" timeControlType="select"/>
+
+              <f:facet name="footer">
+                <div class="TexAlRight">
+                  <p:commandButton value="Save"/>
+                  <p:commandButton value="Cancel"  onclick="PF('eventDlg').hide();"/>
+                </div>
+              </f:facet>
+            </p:dialog> 
+
+          </h:form>
+          <br/><br/>
+        </div>
+      </div>
+    </div>
+
+  </ui:define>
+
+</ui:composition>

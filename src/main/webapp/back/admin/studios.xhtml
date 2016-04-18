@@ -5,33 +5,63 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
 
-  <ui:define name="subheader">
-    Studios
+  <ui:define name="breadcrumb">
+    <h:form>
+      <p:breadCrumb homeDisplay="text">
+        <p:menuitem value="Dashboard" outcome="pretty:dashboard"/>
+        <p:menuitem value="Studios" disabled="true"/>
+      </p:breadCrumb>
+    </h:form>
   </ui:define>
 
   <ui:define name="content">
-    <ui:decorate template="/WEB-INF/templates/pagecontainer.xhtml">
-      <ui:define name="content">
-        <br/>
-        <h:form>
-          <div class="TexAlRight">
-            <p:commandButton value="Add Studio" icon="fa fa-plus Fs16 White"/>
-          </div>
-          <br/>
-          
-          <p:dataTable var="_studio" value="#{studios}">
-            <p:column headerText="Studio">
-              <h:outputText value="#{_studio.businessName}"/>
-            </p:column>
-            <p:column headerText="Code">
-              <h:outputText value="#{_studio.name}"/>
-            </p:column>            
-          </p:dataTable>
-        </h:form>
-        <br/><br/>
-      </ui:define>
+    <div class="Container70">
+      <div class="ContainerIndent">
+        <div class="Card ShadowEffect TexAlLeft">
+          <h:form id="form">
+            <p:growl id="growl" showDetail="true"/>
+            <p:dataTable id="studios" var="_studio" value="#{studios}"
+                         style="margin:-20px; border:none 0px;">
 
-    </ui:decorate>
+              <f:facet name="header">
+                <div class="TexAlRight">
+                  <p:commandButton value="Add Studio" icon="fa fa-plus Fs16 White" onclick="PF('addStudioDlg').show();"/>
+                </div>    
+              </f:facet>
+              
+              <p:column headerText="Studio">
+                <h:outputText value="#{_studio.name}"/>
+              </p:column>
+              
+              <p:column headerText="Code">
+                <h:outputText value="#{_studio.code}"/>
+              </p:column>            
+            </p:dataTable>
+            
+            <p:dialog header="New Studio" widgetVar="addStudioDlg" showEffect="slide" hideEffect="slide" width="600" 
+                      fitViewport="true" modal="true">
+              <p:ajax event="close" update="studios"/>
+
+              <h:outputText value="Enter Studio Details"/>
+              <p:panelGrid columns="2" layout="grid" style="border:0px none">
+                <h:outputLabel value="Studio Name"/>
+                <p:inputText value="#{studiosController.studioName}"/>
+
+                <h:outputLabel value="Code"/>
+                <p:inputText value="#{studiosController.code}"/>
+
+                <f:facet name="footer">
+                  <p:commandButton value="Save" actionListener="#{studiosController.save}" oncomplete="PF('addStudioDlg').hide();" update="growl"/>
+                  <p:commandButton value="Cancel" onclick="PF('addStudioDlg').hide();"/>
+                </f:facet>
+
+              </p:panelGrid>
+
+            </p:dialog>
+          </h:form>
+        </div>
+      </div>
+    </div>
   </ui:define>
 
 </ui:composition>

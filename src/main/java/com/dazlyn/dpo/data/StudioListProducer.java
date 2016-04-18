@@ -1,6 +1,7 @@
 package com.dazlyn.dpo.data;
 
-import com.dazlyn.dpo.web.security.Studio;
+import com.dazlyn.dpo.model.Studio;
+import com.dazlyn.dpo.dao.StudioRepository;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -8,7 +9,6 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.Getter;
-import org.picketlink.idm.PartitionManager;
 
 @RequestScoped
 public class StudioListProducer {
@@ -19,10 +19,10 @@ public class StudioListProducer {
     private List<Studio> studios;
 
     @Inject
-    private PartitionManager partitionManager;
+    private StudioRepository studioManager;
 
     @PostConstruct
     public void initStudios() {
-        studios = partitionManager.getPartitions(Studio.class);
+        studios = studioManager.findAll();
     }
 }

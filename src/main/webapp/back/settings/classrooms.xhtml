@@ -1,0 +1,104 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+  <ui:define name="breadcrumb">
+    <h:form>
+      <p:breadCrumb homeDisplay="text">
+        <p:menuitem value="Dashboard" outcome="pretty:dashboard"/>
+        <p:menuitem value="Classrooms" disabled="true"/>
+      </p:breadCrumb>
+    </h:form>
+  </ui:define>
+
+  <ui:define name="content">
+    <h:form id="form">
+      <div class="Container70">
+        <div class="ContainerIndent">
+          <div class="Card ShadowEffect TexAlLeft">
+            <p:dataTable id="roomsTable" widgetVar="roomsTable" value="#{classroomsView.rooms}" var="classroom"
+                         style="margin:-20px; border:none 0px;"
+                         paginator="true" rows="10" rowsPerPageTemplate="10,25,50,100"
+                       emptyMessage="No classrooms found">
+
+              <f:facet name="header">
+                <div class="TexAlRight">
+                  <p:commandButton id="addBtn" icon="fa fa-plus Fs16 White" value="Add Room" styleClass="GreenButton">
+                    <p:ajax listener="#{classroomsView.prepareNewClassroom()}" oncomplete="PF('roomDlg').show()"
+                            update=":form:roomDlg"/>
+                  </p:commandButton>
+                  <span> </span>
+                  <p:commandButton id="helpBtn" icon="fa fa-question  Fs16 White" type="button" value="Help"/>
+                  <p:overlayPanel for="helpBtn" hideEffect="fade" style="width:500px;">
+                    <div class="TexAlLeft">
+                      <div>
+                        Classrooms are locations for classes. You may have multiple rooms at a single site or rooms at multiple sites.
+                      </div>
+                      <div>
+                        Create a class room for each room you may conduct classes and use the name to understand where they are.
+                      </div>
+                    </div>
+                  </p:overlayPanel>
+                </div>
+              </f:facet>
+
+              <p:column headerText="Name" class="Wid80">
+                <h:outputText value="#{classroom.name}"/>
+              </p:column>
+
+              <p:column headerText="Actions">
+                <p:commandButton id="editBtn" icon="fa fa-edit Fs16 White" styleClass="OrangeButton"
+                                 update=":form:roomDlg" oncomplete="PF('roomDlg').show()" title="Edit">
+                  <f:setPropertyActionListener value="#{classroom}" target="#{classroomsView.selectedRoom}"/>
+                </p:commandButton>
+                <span> </span>
+                <p:commandButton id="archiveBtn" icon="fa fa-trash-o Fs16 White" title="Archive" styleClass="RedButton"
+                                 update=":form:archiveDlg" oncomplete="PF('archiveDlg').show()">
+                  <f:setPropertyActionListener value="#{classroom}" target="#{classroomsView.selectedRoom}"/>
+                </p:commandButton>
+              </p:column>
+            </p:dataTable>
+
+            <p:dialog id="roomDlg" widgetVar="roomDlg" width="500" showEffect="slide" hideEffect="slide"
+                      header="Classroom Details">
+
+              <f:facet name="footer">
+                <div class="TexAlRight">
+                  <p:commandButton id="saveBtn" value="Save" oncomplete="PF('roomDlg').hide()"
+                                   actionListener="#{classroomsView.saveClassroom()}" update=":form:roomsTable"/>
+                  <p:commandButton id="cancelBtn" value="Cancel" onclick="PF('roomDlg').hide()"/>
+                </div>               
+              </f:facet>
+
+              <div class="Container100 TexAlLeft">
+                <div class="Container100">
+                  <h:outputLabel value="Name:"/>
+                </div>
+                <div class="Container100">
+                  <p:inputText id="dlgName" value="#{classroomsView.selectedRoom.name}" class="Wid80"/>
+                </div>
+              </div>
+            </p:dialog>
+
+            <p:confirmDialog id="archiveDlg" widgetVar="archiveDlg" showEffect="slide" hideEffect="slide" severity="alert"
+                             header="Confirm Archive">
+              <f:facet name="message">
+                <h:outputText value="Are you sure you want to archive the '#{classroomsView.selectedRoom.name}' room?"/>
+              </f:facet>
+              <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
+                <p:ajax listener="#{classroomsView.archiveSelectedClassroom()}" update=":form:roomsTable"
+                        oncomplete="PF('archiveDlg').hide()"/>
+              </p:commandButton>
+              <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" 
+                               onclick="PF('archiveDlg').hide()"/>
+            </p:confirmDialog>
+          </div>
+        </div>
+      </div>
+    </h:form>
+  </ui:define>
+
+</ui:composition>

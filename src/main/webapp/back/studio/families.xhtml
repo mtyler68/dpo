@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+  <ui:define name="breadcrumb">
+    <h:form>
+      <p:breadCrumb homeDisplay="text">
+        <p:menuitem value="Dashboard" outcome="pretty:dashboard"/>
+        <p:menuitem value="Families" disabled="true"/>
+      </p:breadCrumb>
+    </h:form>
+  </ui:define>
+
+  <ui:define name="content">
+    <div class="Container70">
+      <div class="ContainerIndent">
+        <div class="Card ShadowEffect TexAlCenter">
+          <h:form id="form">
+            <p:growl id="growl" showDetail="true"/>
+
+            <p:dataTable id="families" var="_family" value="#{familiesController.families}" rows="10" widgetVar="familiesTable"
+                         paginator="true"
+                         rowsPerPageTemplate="10,25,50,100"
+                         emptyMessage="No families found"
+                         filteredValue="#{familiesController.filteredFamilies}"
+                         style="margin:-20px; border:none 0px;">
+
+              <f:facet name="header">
+                <p:outputPanel class="TexAlRight">
+                  <i class="icon-search2"></i>
+                  <p:inputText id="globalFilter" style="width:150px" placeholder="Search"
+                               onkeyup="PF('familiesTable').filter()"/>
+                  <span> </span>
+                  <p:commandButton value="Add Family" icon="fa fa-plus Fs16 White" onclick="PF('addStudioDlg').show();"
+                                   styleClass="GreenButton"/>
+                </p:outputPanel>
+              </f:facet>
+
+              <p:column headerText="First Name" class="TexAlLeft"
+                        sortBy="#{_family.mainPerson.firstName}" 
+                        filterMatchMode="startsWith" filterBy="#{_family.mainPerson.firstName}" filterable="false">
+                <h:outputText value="#{_family.mainPerson.firstName}"/>
+              </p:column>
+              
+              <p:column headerText="Last Name"  class="TexAlLeft"
+                        sortBy="#{_family.mainPerson.lastName}"
+                        filterMatchMode="startsWith" filterBy="#{_family.mainPerson.lastName}" filterable="false">
+                <h:outputText value="#{_family.mainPerson.lastName}"/>
+              </p:column> 
+              
+              <p:column headerText="Phone" class="TexAlLeft">
+                
+              </p:column>
+              
+              <p:column headerText="Email"  class="TexAlLeft">
+                <h:outputText value="#{_family.mainPerson.email}"/>
+              </p:column>
+
+              <p:column headerText="Actions"  class="TexAlLeft Wid20" >
+                <p:button icon="fa fa-users Fs16 White" title="Family account" outcome="pretty:familyDashboard">
+                  <f:param name="familyUid" value="#{_family.uid}"/>
+                </p:button>
+                <span> </span>
+                <p:commandButton icon="fa fa-trash-o Fs16 White" title="Remove" styleClass="RedButton"
+                                 update=":form:removeDlg" oncomplete="PF('removeDlg').show()">
+                  <f:setPropertyActionListener value="#{_family}" target="#{familiesController.selectedFamily}"/>
+                </p:commandButton>
+              </p:column>
+
+            </p:dataTable>
+
+
+
+            <p:dialog header="New Studio" widgetVar="addStudioDlg" showEffect="slide" hideEffect="slide" width="600" 
+                      fitViewport="true" modal="true">
+              <p:ajax event="close" update="families"/>
+
+              <h:outputText value="Enter Studio Details"/>
+              <p:panelGrid columns="2" layout="grid" style="border:0px none">
+                <h:outputLabel value="Studio Name"/>
+                <p:inputText value="#{studiosController.studioName}"/>
+
+                <h:outputLabel value="Code"/>
+                <p:inputText value="#{studiosController.code}"/>
+
+                <f:facet name="footer">
+                  <p:commandButton value="Save" actionListener="#{studiosController.save}" oncomplete="PF('addStudioDlg').hide();" update="growl"/>
+                  <p:commandButton value="Cancel" onclick="PF('addStudioDlg').hide();"/>
+                </f:facet>
+
+              </p:panelGrid>
+
+            </p:dialog>
+
+            <p:confirmDialog id="removeDlg" widgetVar="removeDlg" showEffect="slide" hideEffect="slide" severity="alert"
+                             header="Confirm Remove">
+              <f:facet name="message">
+                <h:outputText value="Are you sure you want to remove the '#{familiesController.selectedFamily.mainPerson.lastName}' family?"/>
+              </f:facet>
+              <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check">
+                <p:ajax listener="#{familiesController.removeSelectedFamily()}" update=":form:families"
+                        oncomplete="PF('removeDlg').hide()"/>
+              </p:commandButton>
+              <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" 
+                               onclick="PF('removeDlg').hide()"/>
+            </p:confirmDialog>
+          </h:form>
+        </div>
+      </div>
+    </div>
+  </ui:define>
+
+</ui:composition>

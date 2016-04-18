@@ -1,0 +1,150 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+  <ui:define name="breadcrumb">
+    <h:form>
+      <p:breadCrumb homeDisplay="text">
+        <p:menuitem value="Dashboard" outcome="pretty:dashboard"/>
+        <p:menuitem value="Classes" disabled="true"/>
+      </p:breadCrumb>
+    </h:form>
+  </ui:define>
+
+  <ui:define name="content">
+
+    <div class="Container100">
+      <div class="ContainerIndent">
+        <div class="Card ShadowEffect TexAlCenter">
+          <br/>
+          <h:form id="form">
+            <p:tooltip/>
+
+            <p:dataTable id="classesTable" value="#{groupClassesView.groupClasses}" var="groupClass"
+                         widgetVar="classesTable"
+                         filteredValue="#{groupClassesView.filteredGroupClasses}">
+
+              <f:facet name="header">
+                <div class="TexAlRight">
+                  <p:commandButton id="addButton" value="Add Class" icon="fa fa-plus Fs16 White"
+                                   styleClass="GreenButton">
+                    <p:ajax listener="#{groupClassesView.prepareNewGroupClass()}" oncomplete="PF('newClassDlg').show()"
+                            update=":form:newClassDlg"/>
+                  </p:commandButton>
+                </div>
+              </f:facet>
+
+              <p:column headerText="Title">
+                <h:outputText value="#{groupClass.title}"/>
+              </p:column>
+
+              <p:column headerText="Genre"
+                        filterBy="#{groupClass.genre.value}" filterMatchMode="exact">
+                <f:facet name="filter">
+                  <p:selectOneMenu onchange="PF('classesTable').filter()">
+                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true"/>
+                    <f:selectItems value="#{groupClassesView.categoryOptions('CLASS_GENRE')}" var="genre" itemLabel="#{genre.value}" itemValue="#{genre.value}"/>
+                  </p:selectOneMenu>
+                </f:facet>
+                <h:outputText value="#{groupClass.genre.value}"/>
+              </p:column>
+
+              <p:column headerText="Level">
+                <h:outputText value="#{groupClass.classLevel.value}"/>
+              </p:column>
+
+              <p:column headerText="Actions">
+                <p:button icon="fa fa-pencil-square-o Fs16 White" title="Class dashboard" outcome="pretty:classDashboard">
+                  <f:param name="groupClassUid" value="#{groupClass.uid}"/>
+                </p:button>
+              </p:column>
+            </p:dataTable>
+
+            <p:dialog id="newClassDlg" widgetVar="newClassDlg" modal="true" showEffect="slide" hideEffect="slide"
+                      width="700" header="Add Class" closable="true">
+
+              <f:facet name="footer">
+                <div class="TexAlRight">
+                  <p:commandButton value="Save" oncomplete="PF('newClassDlg').hide();" update=":form:classesTable"/>
+                  <p:commandButton value="Cancel" onclick="PF('newClassDlg').hide();"/>
+                </div>
+              </f:facet>
+
+              <div class="Container100 TexAlLeft">
+                <div class="ContainerIndent">
+                  <div class="Container100">Class Title:</div>
+                  <div class="Container100">
+                    <p:inputText id="dlgTitle" value="#{groupClassesView.newGroupClass.title}" 
+                                 placeholder="Class title" styleClass="Wid90" title="Name of class"/>
+                  </div>
+
+                  <div class="EmptyBox20"></div>
+
+                  <div class="Container50">Genre:</div>
+                  <div class="Container50">Level:</div>
+                  
+                  <div class="Container50">
+                    <p:selectOneMenu id="dlgGenre" value="#{groupClassesView.newGroupClass.genre}" title="Class genre"
+                                     styleClass="Wid90">
+                      <f:selectItem itemLabel="Select a Genre" value="#{null}"/>
+                      <f:selectItems value="#{groupClassesView.categoryOptions('CLASS_GENRE')}" var="genre"
+                                     itemLabel="#{genre.value}" itemValue="#{genre}"/>
+                    </p:selectOneMenu>
+                  </div>
+                  
+                  <div class="Container50">
+                    <p:selectOneMenu id="dlgLevel" value="#{groupClassesView.newGroupClass.classLevel}" title="Class level"
+                                     styleClass="Wid90">
+                      <f:selectItem itemLabel="Select a Level" value="#{null}"/>
+                      <f:selectItems value="#{groupClassesView.categoryOptions('CLASS_LEVEL')}" var="genre"
+                                     itemLabel="#{genre.value}" itemValue="#{genre}"/>
+                    </p:selectOneMenu>
+                  </div>
+
+                  <div class="EmptyBox20"></div>
+
+                  <div class="Container33">Min. Age:</div>
+                  <div class="Container33">Max. Age:</div>
+                  <div class="Container33">Max. in Class:</div>
+                  
+                  <div class="Container33">
+                    <p:spinner id="dlgMinAge" placeholder="Min. Age" title="Min. Age"/>                  
+                  </div>                  
+                  
+                  <div class="Container33">
+                    <p:spinner id="dlgMaxAge" placeholder="Max. Age" title="Max. Age"/>
+                  </div>                  
+                  
+                  <div class="Container33">
+                    <p:spinner id="dlgMaxInClass" placeholder="Max in Class" title="Max. in Class"/>
+                  </div>
+                  
+                  <div class="EmptyBox20"></div>
+                  
+                  <div class="Container100">
+                    Class Room:
+                  </div>
+                  <div class="Container100">
+                    <p:selectOneMenu id="dlgClassRoom" editable="true">
+                      <f:selectItem itemLabel="Select Class Room" itemValue="#{null}"/>
+                      
+                      <f:selectItem itemLabel="Add class room..." itemValue="-1"/>
+                    </p:selectOneMenu>
+                  </div>
+
+                </div>
+              </div>
+            </p:dialog>
+
+          </h:form>
+          <br/><br/>
+        </div>
+      </div>
+    </div>
+
+  </ui:define>
+
+</ui:composition>

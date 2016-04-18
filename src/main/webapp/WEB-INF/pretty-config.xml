@@ -4,7 +4,7 @@
                xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.0	http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.0.xsd">
   
   <url-mapping id="login"> 
-    <pattern value="/login/#{studioSelector.studio}"/>
+    <pattern value="/login/#{realmSelector.realm}"/>
     <view-id value="/login.xhtml"/>
   </url-mapping>
 
@@ -26,4 +26,50 @@
     <pattern value="/back/admin/studios"/>
     <view-id value="/back/admin/studios.xhtml"/>
   </url-mapping>
+  
+  <url-mapping id="families">
+    <pattern value="/back/studio/families"/>
+    <view-id value="/back/studio/families.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="students">
+    <pattern value="/back/studio/students"/>
+    <view-id value="/back/studio/students.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="familyDashboard">
+    <pattern value="/back/studio/family/#{familyUid}"/>
+    <view-id value="/back/studio/family-dashboard.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="categories">
+    <pattern value="/back/settings/categories"/>
+    <view-id value="/back/settings/categories.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="newStudentWizrd">
+    <pattern value="/back/studio/newStudentWizard"/>
+    <view-id value="/back/studio/new-student-wizard.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="classes">
+    <pattern value="/back/studio/classes"/>
+    <view-id value="/back/studio/classes.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="classDashboard">
+    <pattern value="/back/studio/class/#{groupClassUid}"/>
+    <view-id value="/back/studio/class-dashboard.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="schedule">
+    <pattern value="/back/studio/schedule"/>
+    <view-id value="/back/studio/schedule.xhtml"/>
+  </url-mapping>
+  
+  <url-mapping id="classrooms">
+    <pattern value="/back/settings/classrooms"/>
+    <view-id value="/back/settings/classrooms.xhtml"/>
+  </url-mapping>
+    
 </pretty-config>

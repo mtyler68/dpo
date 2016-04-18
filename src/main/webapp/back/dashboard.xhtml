@@ -5,24 +5,107 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
 
-    <ui:define name="subheader">
-        Dashboard
-    </ui:define>
-    
-    <ui:define name="content">
-        
-        <div class="Container100">
+  <ui:define name="breadcrumb">
+    <h:form>
+      <p:breadCrumb homeDisplay="text">
+        <p:menuitem value="Dashboard" disabled="true"/>
+      </p:breadCrumb>
+    </h:form>
+  </ui:define>
+
+  <ui:define name="content">
+    <style type="text/css">
+      .ui-panel, div.ui-state-hover {
+        margin: 10px;
+        //width:40%;
+      }
+
+      .ui-dashboard-column {
+        width:45%;
+      }
+    </style>
+
+    <div class="Container100">
+      <div class="ContainerIndent">
+        <h:form>
+          <p:dashboard id="board" model="#{dashboardController.model}" style="width:100%;min-height: 400px;" disabled="true">
+            <p:panel id="myClasses" header="My Classes">
+              <div class="Container100 Fs22 BoldGray FontRobotoRegular">September 30, 2015</div>
+              <div class="EmptyBox10"></div>
+              <h:panelGrid columns="5">
+                <h:outputText value="9:00am" styleClass="LeadenGreen Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value=" - " styleClass="LeadenGreen Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value="9:45am" styleClass="LeadenGreen Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value=" : " styleClass="Fs20 BoldGray FontRobotoLight"></h:outputText>
+                <h:outputText value="DanceFUN @ Coronado" styleClass="Fs16 BoldGray FontRobotoLight"></h:outputText>
+
+                <h:outputText value="9:45am" styleClass="Blue Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value=" - " styleClass="Blue Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value="10:30am" styleClass="Blue Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value=" : " styleClass="Fs20 BoldGray FontRobotoLight"></h:outputText>
+                <h:outputText value="Boogie Babies @ Coronado" styleClass="Fs16 BoldGray FontRobotoLight"></h:outputText>
+
+                <h:outputText value="1:30pm" styleClass="LeadenGreen Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value=" - " styleClass="LeadenGreen Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value="2:30pm" styleClass="LeadenGreen Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value=" : " styleClass="Fs20 BoldGray FontRobotoLight"></h:outputText>
+                <h:outputText value="Ballet 1 @ Coronado" styleClass="Fs16 BoldGray FontRobotoLight"></h:outputText>
+              </h:panelGrid>
+              <div class="EmptyBox10"></div>
+              <div class="Separator"></div>
+              <div class="Container100 Fs22 BoldGray FontRobotoRegular">October 1, 2015</div>
+              <div class="EmptyBox10"></div>
+              <h:panelGrid columns="5">
+                <h:outputText value="9:00am" styleClass="LeadenGreen Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value=" - " styleClass="LeadenGreen Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value="9:45am" styleClass="LeadenGreen Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value=" : " styleClass="Fs20 BoldGray FontRobotoLight"></h:outputText>
+                <h:outputText value="DanceFUN @ Coronado" styleClass="Fs16 BoldGray FontRobotoLight"></h:outputText>
+
+                <h:outputText value="9:45am" styleClass="Blue Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value=" - " styleClass="Blue Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value="10:30am" styleClass="Blue Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value=" : " styleClass="Fs20 BoldGray FontRobotoLight"></h:outputText>
+                <h:outputText value="Boogie Babies @ Coronado" styleClass="Fs16 BoldGray FontRobotoLight"></h:outputText>
+
+                <h:outputText value="1:30pm" styleClass="LeadenGreen Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value=" - " styleClass="LeadenGreen Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value="2:30pm" styleClass="LeadenGreen Fs20 FontRobotoLight"></h:outputText>
+                <h:outputText value=" : " styleClass="Fs20 BoldGray FontRobotoLight"></h:outputText>
+                <h:outputText value="Ballet 1 @ Coronado" styleClass="Fs16 BoldGray FontRobotoLight"></h:outputText>
+              </h:panelGrid>
+              <div class="EmptyBox10"></div>
+            </p:panel>
+
+            <p:panel id="chargesVsBalances" header="Charges vs. Balances">
+              <p:chart type="bar" model="#{chargesVsBalancesWidget.model}" style="height: 300px;"/>
+            </p:panel>
+
+          </p:dashboard>
+        </h:form>
+      </div>
+    </div>
+
+    <div class="Container100">
+      <div class="ContainerIndent">
+        <div class="Card ShadowEffect TexAlLeft">
+          <div class="Container50 Responsive50" style="height:500px;">
             <div class="ContainerIndent">
-                <div class="Card ShadowEffect TexAlCenter">
-                    <br/>
-                    <h2>Empty Page</h2>
-                    <br/>
-                    <span class="gray">Use this page to start from scratch and place your custom content.</span>
-                    <br/><br/>
-                </div>
+
             </div>
+          </div>
+          <br/>
+          <h2>Empty Page</h2>
+          <br/>
+          <span class="gray">Use this page to start from scratch and place your custom content.</span>
+          <br/><br/>
+          <ui:fragment rendered="#{authorizationChecker.hasRealmRole('INSTRUCTOR')}">
+            <h3>My Classes</h3>
+          </ui:fragment>
         </div>
-        
-    </ui:define>
+      </div>
+    </div>
+
+  </ui:define>
 
 </ui:composition>
